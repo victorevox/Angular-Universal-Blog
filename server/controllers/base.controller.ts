@@ -27,8 +27,18 @@ export class BaseController {
             }
             return res.status(500).json({message: error.message, code: error.code})
         } else if( error instanceof Error) {
-            res.status(500).json({})
+            return res.status(500).json({message: error.message})
         }
+    }
+
+    /**
+     * checkAuthentication
+     */
+    public isAuthenticated(req: Request) {
+        if(!req.user) {
+            return false;
+        }
+        else return true;
     }
 
 }

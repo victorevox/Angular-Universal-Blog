@@ -2,7 +2,7 @@ import { NgModule, Component, ChangeDetectionStrategy, ChangeDetectorRef } from 
 import { Router, NavigationEnd } from "@angular/router";
 import { AuthenticationService } from './../../services';
 import { IAuthenticationEvent } from "./../../services/authentication.service";
-
+import { NavigableLink } from "./../../interfaces";
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,
     selector: 'app-navbar',
@@ -24,6 +24,18 @@ export class NavbarComponent {
         return this._authService.getUser();
     }
 
+    public isAdminDashboard() {
+        // let is = this._router.isActive("admin", false);
+        let result = /admin\//.test(this._router.routerState.snapshot.url);
+        console.log(result);
+        return result;
+    }
+
+    public isAdmin() {
+        if(!this.user) return false;
+        return this._authService.isAdmin();
+    }
+
     constructor(private _router: Router, private _authService: AuthenticationService, private _chandDetectorRef: ChangeDetectorRef) {
         this._authService.events.subscribe((event: IAuthenticationEvent) => {
             console.log(event);
@@ -32,6 +44,7 @@ export class NavbarComponent {
         this._router.events.subscribe(event => {
             if(event instanceof NavigationEnd) {
                 this.menuState = false;
+                this._chandDetectorRef.markForCheck();
             }
         })
     }
@@ -51,10 +64,4 @@ export class NavbarComponent {
         this._authService.logout();
         this._router.navigate(["/"]);
     }
-}
-
-
-interface NavigableLink {
-    name: String,
-    url: String
 }

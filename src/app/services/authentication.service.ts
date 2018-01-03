@@ -3,7 +3,7 @@ import { Http } from "@angular/http";
 import { Response } from '@angular/http';
 import { AlertsService } from '@jaspero/ng-alerts';
 import { StorageService } from './storage.service';
-import { IUser } from './../interfaces';
+import { IUser, USER_ROLE } from './../interfaces';
 
 @Injectable()
 export class AuthenticationService {
@@ -24,7 +24,7 @@ export class AuthenticationService {
       }, err => {
         reject();
         this.handleError(err);
-      })  
+      })
     })
   }
 
@@ -35,7 +35,7 @@ export class AuthenticationService {
         try {
           let body = <ILoginResponse>response.json();
           let token = body.token;
-          this._storageService.setItem(this.token_name, token);
+          this.saveToken(token);
           console.log(token)
           this.emit(AUTH_EVENT_TYPES.SIGNUP);
           resolve();
@@ -53,7 +53,7 @@ export class AuthenticationService {
 
   isAunthenticated(): boolean {
     let user = this.getUser();
-    if(user) {
+    if (user) {
       return true;
     } else {
       return false;
@@ -69,14 +69,23 @@ export class AuthenticationService {
     return this._storageService.getItem(this.token_name);
   }
 
+  saveToken(token: string) {
+    this._storageService.setItem(this.token_name, token);
+  }
+
+  public isAdmin() {
+    if (!this.getUser()) return false;
+    return this.getUser().roles.indexOf(USER_ROLE.ADMIN) !== -1;
+  }
+
   getUser(): IUser {
     let token = this.getToken();
-    if(!token) return null;
+    if (!token) return null;
     let user: IUser = null;
     try {
       let string = atob(token.split('.')[1]);
       user = <IUser>JSON.parse(string);
-      if(!user.username && user.email) {
+      if (!user.username && user.email) {
         user.username = user.email;
       }
     } catch (err) {
@@ -86,14 +95,14 @@ export class AuthenticationService {
   }
 
   handleError = (err: Error | Response) => {
-    if(err instanceof Error) {
+    if (err instanceof Error) {
       console.log(err);
       this._alert.create("error", err.message, "Error");
-    } else if( err instanceof Response ) {
+    } else if (err instanceof Response) {
       try {
         let error = err.json();
         console.log(error)
-        this._alert.create("error", error.message? error.message : error, "Error");
+        this._alert.create("error", error.message ? error.message : error, "Error");
       } catch (_err) {
         let error = err.toString();
         this._alert.create("error", error, "Error");
@@ -103,7 +112,7 @@ export class AuthenticationService {
   }
 
   emit(eventType: AUTH_EVENT_TYPES) {
-    this.events.emit(<IAuthenticationEvent>{type: eventType})
+    this.events.emit(<IAuthenticationEvent>{ type: eventType })
   }
 
 }
@@ -113,7 +122,7 @@ export interface ILoginCredentials {
   password: string
 }
 
-export interface ISignupCredentials extends ILoginCredentials{
+export interface ISignupCredentials extends ILoginCredentials {
   confirmpassword: string,
   username: string
 }

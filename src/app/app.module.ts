@@ -12,6 +12,7 @@ import { BASE_COMPONENTS } from "./components";
 import { BASE_PAGES } from "./pages";
 import { ROUTES } from "./app.routing";
 import { BASE_SERVICES } from "./services";
+import { GUARDS } from "./guards";
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { BASE_SERVICES } from "./services";
     RouterModule.forRoot(ROUTES)
   ],
   providers: [
-    ...BASE_SERVICES
+    ...BASE_SERVICES,
+    ...GUARDS
   ],
   bootstrap: [AppComponent]
 })

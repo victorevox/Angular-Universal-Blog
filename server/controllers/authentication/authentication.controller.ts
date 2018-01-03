@@ -4,6 +4,7 @@ import { authenticate } from "passport";
 // import * as passport from "passport";
 import { Error as MongooseError } from "mongoose";
 import { BaseController } from "./../base.controller";
+import { USER_ROLE } from "./../../../src/app/interfaces";
 
 export class AuthenticationController extends BaseController {
 
@@ -23,6 +24,7 @@ export class AuthenticationController extends BaseController {
         user.email = req.body.email;
         user.username = req.body.username;
         user.savePassword(req.body.password);
+        user.roles = [USER_ROLE.USER];
         user.save((err: { code: number, errmsg: string }, user) => {
             if (err) {
                 console.log(err);

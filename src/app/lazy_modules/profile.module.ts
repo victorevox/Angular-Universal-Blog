@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core'
 import { RouterModule } from '@angular/router'
-import { ProfileComponent } from "./../pages/profile/profile.component";
+import { ProfileComponent } from "./../pages";
 import { UserImageProfileComponent } from "./../components";
 
 @NgModule({

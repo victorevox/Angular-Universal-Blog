@@ -64,6 +64,10 @@ app.set('views', join(DIST_FOLDER, 'browser'));
 app.get('*.*', express.static(join(DIST_FOLDER, 'browser'), {
   maxAge: '1y'
 }));
+// Server static files from /../statics
+app.get('*.*', express.static(join(DIST_FOLDER, '/../statics'), {
+  maxAge: '1y'
+}));
 
 //register APIs and WEB routes
 api_routes(app);

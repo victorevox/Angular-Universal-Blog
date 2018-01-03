@@ -13,6 +13,12 @@ export var UserSchema: Schema = new Schema({
     profileImg: {
         type: String
     },
+    roles: [{
+        type: String
+    }],
+    permissions: [{
+        type: String
+    }],
     username: {
         type: String,
         unique: true,
@@ -57,6 +63,10 @@ UserSchema.methods.validPassword = function (password) {
     return this.hash === hash;
 };
 
+UserSchema.statics.validateToken = function (token) {
+    return jwt.verify(token, process.env.JWT_SECRET || "MY_SECRET");
+  }
+
 UserSchema.methods.generateJwt = function () {
     var expiry = new Date();
     expiry.setDate(expiry.getDate() + 7);
@@ -65,6 +75,7 @@ UserSchema.methods.generateJwt = function () {
         username: this.username,
         banned: this.banned,
         email: this.email,
+        roles: this.roles,
         createdAt: this.createdAt,
         profileImg: this.profileImg,
         exp: Math.round(expiry.getTime() / 1000),
@@ -82,4 +93,40 @@ export interface IUserModel extends IUser, Document {
     generateJwt(): string;
     validPassword(password: string): boolean
 
+    //public static validateToken(token: string){}    
+
 }
+
+UserSchema.set('toJSON', {
+    transform: function(doc, ret, options) {
+        return {
+            email: ret.email,
+            username: ret.username,
+            banned: ret.banned,
+            createdAt: ret.createdAt,
+            profileImg: ret.profileImg,
+            roles: ret.roles
+        };
+    }
+});
+
+// export abstract class UserModel implements IUserModel {
+//     constructor(parameters) {
+        
+//     }
+
+//     _id;
+//     __v;
+//     banned;
+//     base;
+
+//     hash;
+//     salt;
+
+//     savePassword(password: string){};
+//     validPassword(password: string){};
+//     generateJwt(){};
+
+//     public static validateToken(token: string){}    
+    
+// }

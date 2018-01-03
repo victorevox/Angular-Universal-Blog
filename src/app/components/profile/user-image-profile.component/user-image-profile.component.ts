@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angula
 import { FileUploader } from 'ng2-file-upload';
 import { AuthenticationService } from './../../../services';
 import { AlertsService } from '@jaspero/ng-alerts';
+import { IUser } from './../../../interfaces';
 
 @Component({
   selector: 'app-user-image-profile',
@@ -46,7 +47,18 @@ export class UserImageProfileComponent implements OnInit, AfterViewInit {
       setInterval(() => {
         console.log(this.uploader.progress);
       },400);
-      this.uploader.uploadAll()
+      this.uploader.uploadAll();
+      this.uploader.response.subscribe((response: string) => {
+        try {
+          let res = <IimageUpdateResponse>JSON.parse(response);
+          if(res.token && res.user) {
+            this._authService.saveToken(res.token);
+            this.imageSrc = res.user.profileImg;
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      })
     }
   }
 
@@ -105,4 +117,11 @@ export class UserImageProfileComponent implements OnInit, AfterViewInit {
     }
   }
 
+}
+
+
+export interface IimageUpdateResponse {
+  message: string;
+  token: string;
+  user: IUser
 }

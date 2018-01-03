@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark ">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark "  [ngClass]="{'navbar-toggleable-md navbar-inverse fixed-top bg-inverse': isAdminDashboard() }">
     <!-- fixed-top -->
     <a class="navbar-brand" href="#">Navbar</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault"
@@ -24,6 +24,7 @@
                         <a class="nav-link dropdown-toggle" href="#!" (click)="$event.preventDefault(); menuState = !menuState" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false">{{user?.username}}</a>
                         <div class="dropdown-menu" [ngClass]="{'show': menuState}" aria-labelledby="dropdown01">
+                            <a *ngIf="isAdmin()" class="dropdown-item" routerLink="admin">Admin</a>
                             <a class="dropdown-item" routerLink="profile">Profile</a>
                             <a class="dropdown-item" (click)="logout($event);" href="#">Logout</a>
                         </div>

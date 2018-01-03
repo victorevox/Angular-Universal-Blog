@@ -5,4 +5,10 @@ export interface IUser {
     username: string;
     createdAt: string;
     banned: boolean;
+    roles: [ USER_ROLE ];
+}
+
+export enum USER_ROLE {
+    ADMIN = "admin",
+    USER = "user"
 }
