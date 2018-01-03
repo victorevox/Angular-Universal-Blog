@@ -1,0 +1,54 @@
+<div class="card">
+    <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
+    <div class="card-body">
+        <h2 class="card-title">{{title}}</h2>
+        <!-- Login -->
+        <form *ngIf="!isAuthenticated()" name="auth-form" id="auth-form" #form="ngForm" (submit)="submit($event)" novalidate>
+            <div class="form-group">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input ngModel type="email" class="form-control" name="email" id="email" aria-describedby="emailField" placeholder="Enter your email" [ngClass]="{'is-invalid': !form.controls['email']?.valid && form.controls['email']?.dirty}" required>
+                    <small *ngIf="form.controls['email']?.errors?.required && (form.controls['email']?.dirty || form.submitted)" id="" class="form-text invalid-feedback">Email is required</small>
+                    <!-- <small id="emailField" class="form-text text-muted">Help text</small> -->
+                </div>
+                <div *ngIf="!isLogin()" class="form-group">
+                    <label for="username">Username</label>
+                    <input ngModel type="text" class="form-control" name="username" id="username" aria-describedby="usernameField" placeholder="Enter username" [ngClass]="{'is-invalid': !form.controls['username']?.valid && form.controls['username']?.dirty}" required>
+                    <small *ngIf="form.controls['username']?.errors?.required && (form.controls['username']?.dirty || form.submitted)" id="" class="form-text invalid-feedback">Username is required</small>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input ngModel type="password" class="form-control" name="password" id="password" placeholder="Enter your password" [ngClass]="{'is-invalid': !form.controls['password']?.valid && form.controls['password']?.dirty}" required>
+                    <small *ngIf="form.controls['password']?.errors?.required && (form.controls['password']?.dirty || form.submitted)" id="" class="form-text invalid-feedback">Password is required</small>
+                </div>
+                <div *ngIf="!isLogin()" class="form-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input ngModel pattern="{{form.controls.password?.value}}" type="password" class="form-control" [ngClass]="{'is-invalid': !form.controls['confirm-password']?.valid && form.controls['confirm-password']?.dirty}" name="confirm-password" id="confirm-password" placeholder="Confirm your password" required>
+                    <small *ngIf="form.controls['confirm-password']?.errors?.pattern" id="" class="form-text invalid-feedback">Password doesn't match</small>
+                </div>
+
+                <div class="row">
+                    <div class="mx-auto" style="max-width: 81px">
+                            <button type="submit" class="btn btn-primary" >{{auth_type}}</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <hr>
+        <div *ngIf="!isAuthenticated()" class="container">
+            <div class="mx-auto">
+                <h4 class="text-center">Or</h4>
+            </div>
+            <div class="row">
+                <div class="mx-auto" style="max-width: 81px">
+                    <a name="signup-link" id="signup-link" style="color: #fff; font-weight: 600;" class="btn btn-secondary" (click)="changeType()"
+                        role="button">{{ isLogin()? 'Signup' : 'Login'}}</a>
+                </div>
+            </div>
+        </div>
+        <!-- Signup -->
+        <div *ngIf="isAuthenticated()">
+            <h3>You're already Authenticated</h3>
+        </div>
+    </div>
+</div>

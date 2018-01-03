@@ -1,0 +1,1 @@
+export { UserImageProfileComponent } from "./user-image-profile.component/user-image-profile.component";

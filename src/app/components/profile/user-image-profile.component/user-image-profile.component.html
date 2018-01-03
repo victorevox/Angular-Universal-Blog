@@ -1,0 +1,8 @@
+<div>
+    <img src="{{imageSrc}}" st alt="profile-image" >
+    <button #triggerBtn (click)="readyToUpload? upload($event) : filePicker.click()" type="button" name="" id="" class="btn btn-primary btn-lg btn-block">{{readyToUpload? 'Upload' : 'Edit'}}</button>
+    <div >
+        <button [hidden]="!readyToUpload || !(imageSrc !== defaultSource)" (click)="removeImage()" type="button" name="" id="" class="btn btn-warning btn-lg btn-block">Remove</button>
+    </div>
+    <input hidden="hidden" type="file" #filePicker name="image-picker" id="image-picker" class="btn btn-primary btn-lg btn-block"  />
+</div>
