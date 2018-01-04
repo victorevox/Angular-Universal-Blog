@@ -3,7 +3,7 @@ export interface IUser {
     profileImg: string;
     email: string;
     username: string;
-    createdAt: string;
+    createdAt: Date;
     banned: boolean;
     roles: [ USER_ROLE ];
 }

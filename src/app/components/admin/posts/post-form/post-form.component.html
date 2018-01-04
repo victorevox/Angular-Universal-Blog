@@ -1,17 +1,24 @@
 <div class="container p-4">
   <h2>Create Post</h2>
-  <form name="form" id="form" #form="ngForm">
+  <form name="post-form" id="post-form" #form="ngForm">
     <div class="form-group">
       <label for="title">Title</label>
-      <input type="text" class="form-control" id="title" aria-describedby="titleHelp" placeholder="Enter title">
+      <input name="title" ngModel type="text" class="form-control" id="title" aria-describedby="titleHelp" placeholder="Enter title">
       <small id="titleHelp" class="form-text text-muted">We'll never share your title with anyone else.</small>
     </div>
-  
-    <div class="form-check">
-      <label class="form-check-label">
-        <input type="checkbox" class="form-check-input"> Check me out
-      </label>
+
+    <div #editorContainer class="editor-container">
+
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+
+    <quill-editor *ngIf="enableForm" name="content" [(ngModel)]="editorContent"
+              [options]="editorOptions"
+              (blur)="onEditorBlured($event)"
+              (focus)="onEditorFocused($event)"
+              (ready)="onEditorCreated($event)"
+              (change)="onContentChanged($event)"></quill-editor>
+
+    
+    <button type="submit" class="btn btn-primary mt-4">Submit</button>
   </form>
 </div>

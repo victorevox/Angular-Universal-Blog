@@ -53,6 +53,7 @@
     "method-override": "^2.3.10",
     "mongoose": "^5.0.0-rc0",
     "ng2-file-upload": "^1.3.0",
+    "ngx-quill-editor": "^2.2.2",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "rxjs": "^5.5.2",

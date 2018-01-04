@@ -18,7 +18,7 @@ module.exports = {
   },
   resolve: { extensions: ['.ts', '.js'] },
   // Make sure we include all node_modules etc
-  externals: [/(node_modules|main\..*\.js)/,/^(?!\.|\/).+/i],
+  externals: [/(node_modules|main\..*\.js)/, /^(?!\.|\/).+/i],
   output: {
     // Puts the output at the root of the dist folder
     path: path.join(__dirname, 'dist'),
@@ -55,7 +55,22 @@ module.exports = {
       /(.+)?mongoose(\\|\/)(.+)?/,
       path.join(__dirname, 'server'),
       {}
-    )
+    ),
+    new webpack.DefinePlugin({
+      window: undefined,
+      document: JSON.stringify({
+        createElement: function(){},
+      }),
+      location: JSON.stringify({
+        protocol: 'https',
+        host: `localhost`,
+      })
+    }),
+    new webpack.NormalModuleReplacementPlugin(
+      /quill.js/,
+      path.resolve(__dirname, 'src/server-mocks/empty.js')
+      // or if you need to make some type of specific mock (copy/pasting) and editing
+      // path.resolve(__dirname, 'src/server-mocks/primeng.js')
+    ),
   ]
 }
-  

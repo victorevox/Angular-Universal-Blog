@@ -6,6 +6,17 @@ import { SidebarComponent } from "./../components";
 import { DashboardComponent, PostFormComponent, PostListComponent } from "./../components/admin";
 import { CommonModule } from '@angular/common';
 import { FormsModule } from "@angular/forms";
+import { QuillEditorModule } from 'ngx-quill-editor';
+import { platform } from "./../../environments/platform";
+// import { QuillEditorComponent } from "ngx-quill-editor/quillEditor.component";
+
+
+
+const platformModules = [];
+
+if(!platform.server) {
+    // platformModules.push(QuillEditorModule)
+}
 
 @NgModule({
     declarations: [
@@ -13,11 +24,19 @@ import { FormsModule } from "@angular/forms";
         SidebarComponent,
         DashboardComponent,
         PostFormComponent,
-        PostListComponent
+        PostListComponent,
+    ],
+    exports: [
+        // QuillEditorComponent
+    ],
+    entryComponents: [
+        // QuillEditorComponent
     ],
     imports: [
         CommonModule,
         FormsModule,
+        QuillEditorModule,
+        ...platformModules,
         RouterModule.forChild([
             {
                 path: '', component: AdminComponent,/*  pathMatch: 'full', */

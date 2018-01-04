@@ -3,6 +3,7 @@ import { isPlatformBrowser, isPlatformServer } from "@angular/common";
 import { setInterval, setTimeout } from 'timers';
 // import { Util } from "@app/classes/util";
 import { Util } from "../../classes";
+import { GlobalsService } from "./../../services";
 
 @Component({
     selector: 'app-counter',
@@ -11,9 +12,9 @@ import { Util } from "../../classes";
 export class CounterComponent { 
     public counter: number = 0;
     
-    constructor(@Inject(PLATFORM_ID) private platformId) {
+    constructor( private _globals: GlobalsService) {
         
-        if ( isPlatformBrowser(this.platformId) ) {
+        if ( this._globals.isBrowser() ) {
             setTimeout(()=> {
                 setInterval(() => {
                     this.counter += 1;
@@ -21,7 +22,6 @@ export class CounterComponent {
             },3000);
         }
 
-        console.log(isPlatformBrowser(this.platformId))
     }
 
  }
