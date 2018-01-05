@@ -2,5 +2,6 @@ export interface IPost {
     _id: any;
     title: string;
     content: string;
-    createdAt: Date;
+    createdAt?: Date;
+    updatedAt?: Date;
 }

@@ -20,7 +20,11 @@ export class PostFormComponent implements OnInit {
   public editorOptions = {
     placeholder: "insert content..."
   };
-  public post = {};
+  public post: IPost = {
+    _id: null,
+    title: '',
+    content: ''
+  };
 
   @ViewChild('editorContainer') editorContainer: ElementRef;
 
