@@ -3,23 +3,22 @@
   <form *ngIf="page" name="page-form" id="page-form" #form="ngForm" (submit)="submit($event, form)">
     <div class="form-group">
       <label for="title">Title</label>
-      <input required name="title" [(ngModel)]="page.title" type="text" class="form-control" id="title" aria-describedby="titleHelp" [ngClass]="{'is-invalid': !form.controls['title']?.valid && form.controls['title']?.dirty}"  placeholder="Enter title">
+      <input required name="title" [(ngModel)]="page.title" type="text" class="form-control" id="title" aria-describedby="titleHelp"
+        [ngClass]="{'is-invalid': !form.controls['title']?.valid && form.controls['title']?.dirty}" placeholder="Enter title">
       <!-- <small id="titleHelp" class="form-text text-muted">We'll never share your title with anyone else.</small> -->
       <small *ngIf="form.controls['title']?.errors?.required && (form.controls['title']?.dirty || form.submitted)" id="" class="form-text invalid-feedback">Title is required</small>
     </div>
 
     <div #editorContainer class="editor-container">
-      <quill-editor required name="content" [(ngModel)]="page.content"
-                [ngClass]="{'is-invalid': !form.controls['content']?.valid && form.controls['content']?.dirty}"
-                [options]="editorOptions"
-                (blur)="onEditorBlured($event)"
-                (focus)="onEditorFocused($event)"
-                (ready)="onEditorCreated($event)"
-                (change)="onContentChanged($event)"></quill-editor>
-  
+      <!-- <quill-editor required name="content" [(ngModel)]="page.content" [ngClass]="{'is-invalid': !form.controls['content']?.valid && form.controls['content']?.dirty}"
+        [options]="editorOptions" (blur)="onEditorBlured($event)" (focus)="onEditorFocused($event)" (ready)="onEditorCreated($event)"
+        (change)="onContentChanged($event)"></quill-editor> -->
+      <textarea required [(ngModel)]="page.content" #textarea="ngModel" name="content" id="content" cols="30" rows="10" hidden></textarea>  
       
+      <app-tiny-editor [value]="page?.content" (change)=" onEditorChange($event, textarea)" ></app-tiny-editor>
+
       <button type="submit" class="btn btn-primary mt-4">Submit</button>
     </div>
-
+    
   </form>
 </div>

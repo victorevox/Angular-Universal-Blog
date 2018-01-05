@@ -3,7 +3,7 @@ import { IPage, IResourceListResponse } from "./../../../../interfaces"
 import { CustomHttpService } from "./../../../../services";
 import { Router, ActivatedRoute } from "@angular/router";
 import { AlertsService } from '@jaspero/ng-alerts';
-import { NgForm } from '@angular/forms';
+import { NgForm, NgModel } from '@angular/forms';
 import { NotificationsService } from 'angular2-notifications';
 
 @Component({
@@ -17,6 +17,7 @@ export class PageEditComponent implements OnInit {
   public page: IPage = null;
 
   public editor;
+  public pageContent: string = '';
 
   constructor(private _http: CustomHttpService, private _cDr: ChangeDetectorRef, private _router: Router, private _notifications: NotificationsService, private _route: ActivatedRoute, private _alerts: AlertsService) {
     this._route.params.subscribe(params => {
@@ -67,6 +68,17 @@ export class PageEditComponent implements OnInit {
       console.error(err);
       this._notifications.error("Error", "Something went wrong");
     })
+  }
+
+  onEditorChange(event, textarea: NgModel) {
+    console.log("on editor change", event);
+    this.page.content = event;
+    // textarea.update.emit(event);
+    // textarea.model = event;
+    // textarea.viewModel = event;
+    this._cDr.detectChanges();
+    console.log(textarea);
+    
   }
 
   goToList() {

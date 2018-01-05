@@ -14,7 +14,11 @@
     </thead>
     <tbody>
       <tr *ngFor="let item of posts">
-        <td *ngFor="let prop of columnsToShow">{{item[prop.path]}}</td>
+        <td *ngFor="let prop of columnsToShow">
+          <div *ngIf="prop.path !== 'content'">{{item[prop.path]}}</div>
+          <div *ngIf="prop.path === 'content'" [innerHtml]="item[prop.path]"></div>
+          
+        </td>
         <button type="button" class="btn btn-success btn-sm" (click)="edit(item)">Edit</button>
       </tr>
     </tbody>

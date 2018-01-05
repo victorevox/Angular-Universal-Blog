@@ -9,7 +9,7 @@ import { Router } from "@angular/router";
 })
 export class PageListComponent implements OnInit {
 
-  public pages: Array<IPage> = [
+  public pages: Array<any> = [
     { name: "Contact" },
     { name: "Home" }
   ]

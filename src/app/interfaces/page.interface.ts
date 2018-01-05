@@ -1,5 +1,5 @@
 export interface IPage {
-    _id?: string;
+    _id: any;
     name: string;
     title?: string;
     content?: string;

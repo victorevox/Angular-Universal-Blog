@@ -28,7 +28,7 @@ import { platform } from "./../../../environments/platform";
         RouterModule.forChild([
             {
                 path: '', component: AdminComponent,/*  pathMatch: 'full', */
-                // redirectTo: "/admin/dashboard",
+                canActivate: [AdminAuthGuard],
                 children: [
                     { path: 'dashboard', component: DashboardComponent },
                     { path: 'posts', component: PostListComponent },

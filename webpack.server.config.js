@@ -18,7 +18,7 @@ module.exports = {
   },
   resolve: { extensions: ['.ts', '.js'] },
   // Make sure we include all node_modules etc
-  externals: [/(node_modules|main\..*\.js)/, /^(?!\.|\/).+/i],
+  externals: [/(node_modules|main\..*\.js)/, /^(?!\.|\/).+/i, /(node_modules|main\..*\.css)/],
   output: {
     // Puts the output at the root of the dist folder
     path: path.join(__dirname, 'dist'),

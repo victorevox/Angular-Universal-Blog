@@ -5,6 +5,7 @@ import { AuthenticationComponent } from "./authentication.component/authenticati
 import { UserImageProfileComponent } from "./profile";
 import { SidebarComponent } from "./admin";
 import { PostListingComponent } from "./posts/post-listing.component/post-listing.component";
+import { TinyEditorComponent } from "./tiny-editor/tiny-editor.component";
 
 export { 
     NavbarComponent,
@@ -13,7 +14,8 @@ export {
     LazyComponent,
     UserImageProfileComponent,
     SidebarComponent,
-    PostListingComponent
+    PostListingComponent,
+    TinyEditorComponent
 }
 
 export const BASE_COMPONENTS = [

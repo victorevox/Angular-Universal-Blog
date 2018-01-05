@@ -19,7 +19,9 @@
         "testTsconfig": "tsconfig.spec.json",
         "prefix": "app",
         "styles": [
-          "styles.css"
+          "styles.css",
+          "./../node_modules/tinymce/skins/lightgray/content.min.css",
+          "./../node_modules/tinymce/skins/lightgray/skin.min.css"
         ],
         "scripts": [],
         "environmentSource": "environments/environment.ts",
