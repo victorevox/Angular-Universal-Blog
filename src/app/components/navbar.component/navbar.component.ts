@@ -16,6 +16,10 @@ export class NavbarComponent {
         {
             name: "Contact",
             url: "/contact"
+        },
+        {
+            name: "Posts",
+            url: "/posts"
         }
     ]
 

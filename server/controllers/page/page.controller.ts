@@ -1,19 +1,39 @@
 import { Request, Response, NextFunction } from "express";
-import { Post, IPostModel } from "./../../models";
+import { Page, IPageModel } from "./../../models";
 import { Error as MongooseError } from "mongoose";
 import { BaseController } from "./../base.controller";
 import * as path from "path";
-import { USER_ROLE, IPost } from "../../../src/app/interfaces";
+import { USER_ROLE, IPage } from "../../../src/app/interfaces";
 import { IResourceListResponse } from "../../../src/app/interfaces/misc.interface";
 
-export class PostController extends BaseController {
+export class PageController extends BaseController {
 
     constructor() {
         super()
+
+        //Create pages if not on DB
+        Page.findOne({name: "Contact"}).then(page => {
+            if(!page) {
+                page = new Page();
+                page.name = "Contact";
+                page.title = "Contact Page";
+                page.content = "Example content";
+                page.save();
+            }
+        })
+        Page.findOne({name: "Home"}).then(page => {
+            if(!page) {
+                page = new Page();
+                page.name = "Home";
+                page.title = "Home Page";
+                page.content = "Example content";
+                page.save();
+            }
+        })
     }
 
     public list = (req: Request, res: Response) => {
-        this._list(req, res, Post);
+        super._list(req, res, Page)
     }
 
     public update = (req: Request, res: Response) => {
@@ -21,9 +41,9 @@ export class PostController extends BaseController {
             return this.handleError(new Error("You are unauthorized"), req, res);
         }
         let id = req.params.id;
-        let data: IPost = req.body;
+        let data: IPage = req.body;
         if(!id) return this.handleError(new Error("You must provide resource ID"), req, res);
-        Post.findById(id).then(post => {
+        Page.findById(id).then(post => {
             if(!post) return this.handleError(new Error("Resource not found"), req, res);
             if(data.content) {
                 post.content = data.content;
@@ -44,13 +64,13 @@ export class PostController extends BaseController {
         if (!this.isAuthenticated(req, USER_ROLE.ADMIN)) {
             return this.handleError(new Error("You are unauthorized"), req, res);
         }
-        let data: IPost = req.body;
+        let data: IPage = req.body;
         if (!data) return this.handleError(new Error("You must provide all required fields"), req, res);
-        let post = new Post();
+        let post = new Page();
         post.title = data.title;
         post.content = data.content;
         post.save().then(post => {
-            return res.status(200).json({ message: "Post inserted successfully", post: post })
+            return res.status(200).json({ message: "Page inserted successfully", post: post })
         }).catch(err => {
             return this.handleError(err, req, res);
         })

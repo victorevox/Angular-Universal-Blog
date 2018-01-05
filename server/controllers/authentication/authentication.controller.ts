@@ -54,11 +54,12 @@ export class AuthenticationController extends BaseController {
     }
 
     public list = (req: Request, res: Response) => {
-        User.find().then(users => {
-            res.status(200).json(users);
-        }, err => {
-            console.log(err);
-            res.status(500).json(err);
-        })
+        super._list(req, res, User);
+        // User.find().then(users => {
+        //     res.status(200).json(users);
+        // }, err => {
+        //     console.log(err);
+        //     res.status(500).json(err    );
+        // })
     }
 }

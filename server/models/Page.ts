@@ -2,9 +2,14 @@
 import { Document, Schema, Model, model, Types } from "mongoose";
 import { randomBytes, pbkdf2Sync } from "crypto";
 import * as jwt from "jsonwebtoken";
-import { IPost } from "./../../src/app/interfaces";
+import { IPage } from "./../../src/app/interfaces";
 
-export var PostSchema: Schema = new Schema({
+export var PageSchema: Schema = new Schema({
+    name: {
+        type: String,
+        unique: true,
+        required: true
+    },
     title: {
         type: String,
         required: true
@@ -13,21 +18,25 @@ export var PostSchema: Schema = new Schema({
         type: String,
         required: true
     },
+    updatedAt: {
+        type: Date,
+    },
     createdAt: {
         type: Date
     }
 })
 
-PostSchema.pre("save", function (next) {
+PageSchema.pre("save", function (next) {
     let now = new Date();
     if (!this.createdAt) {
         this.createdAt = now;
     }
+    this.updatedAt = new Date();
     next();
 });
 
-export var Post: Model<IPostModel> = model<IPostModel>("Post", PostSchema);
+export var Page: Model<IPageModel> = model<IPageModel>("Page", PageSchema);
 
-export interface IPostModel extends IPost, Document {
+export interface IPageModel extends IPage, Document {
     
 }

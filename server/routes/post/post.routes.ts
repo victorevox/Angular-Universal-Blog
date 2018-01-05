@@ -1,8 +1,11 @@
 import { Router } from "express";
-import { UserController } from "../../controllers";
+import { PostController } from "../../controllers";
 
-export const user_router = Router();
+export const post_router = Router();
 
-let Controller = new UserController();
+let Controller = new PostController();
 
-user_router.post('/user', Controller.update);
+post_router.get('/post', Controller.list);
+post_router.get('/post/:id', Controller.list);
+post_router.put('/post/:id', Controller.update);
+post_router.post('/post', Controller.create);

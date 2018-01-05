@@ -1,0 +1,17 @@
+<div class="container p-4">
+  <h2>Create Post</h2>
+  <form name="post-form" id="post-form" #form="ngForm">
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input name="title" ngModel type="text" class="form-control" id="title" aria-describedby="titleHelp" placeholder="Enter title">
+      <small id="titleHelp" class="form-text text-muted">We'll never share your title with anyone else.</small>
+    </div>
+
+    <div #editorContainer class="editor-container">
+
+    </div>
+
+    
+    <button type="submit" class="btn btn-primary mt-4">Submit</button>
+  </form>
+</div>
