@@ -10,7 +10,7 @@ export const dbConfig = () => {
         console.log(connectionString);
         connect(connectionString);
     } catch (error) {
-        
+        console.log(error);
     }
-    connect('mongodb://localhost/test');
+    // connect('mongodb://localhost/test');
 }
