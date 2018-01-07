@@ -6,7 +6,8 @@ export const dbConfig = () => {
         let user = process.env.DB_USER? process.env.DB_USER : '';
         let pass = process.env.DB_PASS? ':' + process.env.DB_PASS + '@' : user? '@' : '';
         let name = process.env.DB_NAME? process.env.DB_NAME : 'test';
-        let connectionString = `mongodb://${user}${pass}${host}/${name}`;
+        let port = process.env.DB_PORT? ':' + process.env.DB_PORT : '';
+        let connectionString = `mongodb://${user}${pass}${host}${port}/${name}`;
         console.log(connectionString);
         connect(connectionString);
     } catch (error) {
