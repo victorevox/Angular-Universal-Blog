@@ -4,6 +4,7 @@ import { Response } from '@angular/http';
 import { AlertsService } from '@jaspero/ng-alerts';
 import { StorageService } from './storage.service';
 import { IUser, USER_ROLE } from './../interfaces';
+import { NotificationsService } from 'angular2-notifications';
 
 @Injectable()
 export class AuthenticationService {
@@ -11,7 +12,7 @@ export class AuthenticationService {
   private token_name = "access-token";
   public events: EventEmitter<IAuthenticationEvent> = new EventEmitter();
 
-  constructor(private http: Http, private _alert: AlertsService, private _storageService: StorageService) {
+  constructor(private http: Http, private _alert: AlertsService, private _storageService: StorageService, private _notifications: NotificationsService) {
 
   }
 
@@ -19,7 +20,8 @@ export class AuthenticationService {
     return new Promise((resolve, reject) => {
       this.http.post("/api/authentication/register", credentials).subscribe((response: Response) => {
         console.log(response.text());
-        this.emit(AUTH_EVENT_TYPES.LOGIN)
+        this.emit(AUTH_EVENT_TYPES.SIGNUP)
+        this._notifications.success("Great!", "You've been registered successfuly")
         resolve();
       }, err => {
         reject();
@@ -37,7 +39,7 @@ export class AuthenticationService {
           let token = body.token;
           this.saveToken(token);
           console.log(token)
-          this.emit(AUTH_EVENT_TYPES.SIGNUP);
+          this.emit(AUTH_EVENT_TYPES.LOGIN);
           resolve();
         } catch (error) {
           reject();

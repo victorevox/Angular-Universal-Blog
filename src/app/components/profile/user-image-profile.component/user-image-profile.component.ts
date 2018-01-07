@@ -4,6 +4,7 @@ import { FileUploader } from 'ng2-file-upload';
 import { AuthenticationService } from './../../../services';
 import { AlertsService } from '@jaspero/ng-alerts';
 import { IUser } from './../../../interfaces';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
   selector: 'app-user-image-profile',
@@ -24,7 +25,7 @@ export class UserImageProfileComponent implements OnInit, AfterViewInit {
 
   // public uploader:FileUploader = new FileUploader({url: URL});
 
-  constructor(private _authService: AuthenticationService, private _alerts: AlertsService) {
+  constructor(private _authService: AuthenticationService, private _alerts: AlertsService, private _notifications: NotificationsService) {
 
   }
 
@@ -54,9 +55,11 @@ export class UserImageProfileComponent implements OnInit, AfterViewInit {
           if(res.token && res.user) {
             this._authService.saveToken(res.token);
             this.imageSrc = res.user.profileImg;
+            this._notifications.success("Image updated", "Your profile's image was updated successfully");
           }
         } catch (error) {
           console.error(error);
+          this._notifications.error("Error", "Something went wrong while updating your profile's image");
         }
       })
     }
