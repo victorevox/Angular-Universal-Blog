@@ -7,29 +7,35 @@
             <div class="form-group">
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input ngModel type="email" class="form-control" name="email" id="email" aria-describedby="emailField" placeholder="Enter your email" [ngClass]="{'is-invalid': !form.controls['email']?.valid && form.controls['email']?.dirty}" required>
+                    <input ngModel type="email" class="form-control" name="email" id="email" aria-describedby="emailField" placeholder="Enter your email"
+                        [ngClass]="{'is-invalid': !form.controls['email']?.valid && form.controls['email']?.dirty}" required>
                     <small *ngIf="form.controls['email']?.errors?.required && (form.controls['email']?.dirty || form.submitted)" id="" class="form-text invalid-feedback">Email is required</small>
                     <!-- <small id="emailField" class="form-text text-muted">Help text</small> -->
                 </div>
                 <div *ngIf="!isLogin()" class="form-group">
                     <label for="username">Username</label>
-                    <input ngModel type="text" class="form-control" name="username" id="username" aria-describedby="usernameField" placeholder="Enter username" [ngClass]="{'is-invalid': !form.controls['username']?.valid && form.controls['username']?.dirty}" required>
-                    <small *ngIf="form.controls['username']?.errors?.required && (form.controls['username']?.dirty || form.submitted)" id="" class="form-text invalid-feedback">Username is required</small>
+                    <input ngModel type="text" class="form-control" name="username" id="username" aria-describedby="usernameField" placeholder="Enter username"
+                        [ngClass]="{'is-invalid': !form.controls['username']?.valid && form.controls['username']?.dirty}" required>
+                    <small *ngIf="form.controls['username']?.errors?.required && (form.controls['username']?.dirty || form.submitted)" id=""
+                        class="form-text invalid-feedback">Username is required</small>
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input ngModel type="password" class="form-control" name="password" id="password" placeholder="Enter your password" [ngClass]="{'is-invalid': !form.controls['password']?.valid && form.controls['password']?.dirty}" required>
-                    <small *ngIf="form.controls['password']?.errors?.required && (form.controls['password']?.dirty || form.submitted)" id="" class="form-text invalid-feedback">Password is required</small>
+                    <input ngModel type="password" class="form-control" name="password" id="password" placeholder="Enter your password" [ngClass]="{'is-invalid': !form.controls['password']?.valid && form.controls['password']?.dirty}"
+                        required>
+                    <small *ngIf="form.controls['password']?.errors?.required && (form.controls['password']?.dirty || form.submitted)" id=""
+                        class="form-text invalid-feedback">Password is required</small>
                 </div>
                 <div *ngIf="!isLogin()" class="form-group">
                     <label for="confirm-password">Confirm Password</label>
-                    <input ngModel pattern="{{form.controls.password?.value}}" type="password" class="form-control" [ngClass]="{'is-invalid': !form.controls['confirm-password']?.valid && form.controls['confirm-password']?.dirty}" name="confirm-password" id="confirm-password" placeholder="Confirm your password" required>
+                    <input ngModel pattern="{{form.controls.password?.value}}" type="password" class="form-control" [ngClass]="{'is-invalid': !form.controls['confirm-password']?.valid && form.controls['confirm-password']?.dirty}"
+                        name="confirm-password" id="confirm-password" placeholder="Confirm your password" required>
                     <small *ngIf="form.controls['confirm-password']?.errors?.pattern" id="" class="form-text invalid-feedback">Password doesn't match</small>
                 </div>
 
                 <div class="row">
                     <div class="mx-auto" style="max-width: 81px">
-                            <button type="submit" class="btn btn-primary" >{{auth_type}}</button>
+                        <button type="submit" class="btn btn-primary">{{auth_type}}</button>
                     </div>
                 </div>
             </div>
@@ -38,6 +44,11 @@
         <div *ngIf="!isAuthenticated()" class="container">
             <div class="mx-auto">
                 <h4 class="text-center">Or</h4>
+            </div>
+            <div class="row">
+                <div class="col m-3" style="text-align: center">
+                    <button type="button" class="btn btn-outline-primary m-auto" (click)="loginFacebook($event)">Facebook</button>
+                </div>
             </div>
             <div class="row">
                 <div class="mx-auto" style="max-width: 81px">

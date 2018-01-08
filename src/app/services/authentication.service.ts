@@ -3,8 +3,9 @@ import { Http } from "@angular/http";
 import { Response } from '@angular/http';
 import { AlertsService } from '@jaspero/ng-alerts';
 import { StorageService } from './storage.service';
-import { IUser, USER_ROLE } from './../interfaces';
+import { IUser, USER_ROLE, IAuthenticationEvent, ISignupCredentials, AUTH_EVENT_TYPES, ILoginCredentials, ILoginResponse } from './../interfaces';
 import { NotificationsService } from 'angular2-notifications';
+import { Location } from "@angular/common";
 
 @Injectable()
 export class AuthenticationService {
@@ -12,7 +13,7 @@ export class AuthenticationService {
   private token_name = "access-token";
   public events: EventEmitter<IAuthenticationEvent> = new EventEmitter();
 
-  constructor(private http: Http, private _alert: AlertsService, private _storageService: StorageService, private _notifications: NotificationsService) {
+  constructor(private http: Http, private _alert: AlertsService, private _location: Location, private _storageService: StorageService, private _notifications: NotificationsService) {
 
   }
 
@@ -51,6 +52,12 @@ export class AuthenticationService {
         this.handleError(err);
       })
     })
+  }
+
+  loginFacebook() {
+    this._location.go( "/api/authentication/facebook");
+    window && window.location.reload();
+    // this._location.replaceState("/api/authentication/facebook");
   }
 
   isAunthenticated(): boolean {
@@ -117,30 +124,4 @@ export class AuthenticationService {
     this.events.emit(<IAuthenticationEvent>{ type: eventType })
   }
 
-}
-
-export interface ILoginCredentials {
-  email: string,
-  password: string
-}
-
-export interface ISignupCredentials extends ILoginCredentials {
-  confirmpassword: string,
-  username: string
-}
-
-export interface ILoginResponse {
-  token: string;
-  message: string;
-}
-
-export enum AUTH_EVENT_TYPES {
-  SIGNUP = "signup",
-  LOGIN = "login",
-  LOGOUT = "logout",
-  UPDATE = "update"
-}
-
-export interface IAuthenticationEvent {
-  type: AUTH_EVENT_TYPES
 }

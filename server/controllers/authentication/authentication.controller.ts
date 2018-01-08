@@ -4,7 +4,7 @@ import { authenticate } from "passport";
 // import * as passport from "passport";
 import { Error as MongooseError } from "mongoose";
 import { BaseController } from "./../base.controller";
-import { USER_ROLE } from "./../../../src/app/interfaces";
+import { USER_ROLE, AUTH_TYPES, AUTH_SOCIAL_STATUS } from "./../../../src/app/interfaces";
 
 export class AuthenticationController extends BaseController {
 
@@ -14,11 +14,11 @@ export class AuthenticationController extends BaseController {
 
     public register = (req: Request, res: Response) => {
         let self = this;
-        if(req.body && !req.body.password || !req.body["confirm-password"]) {
-            return res.status(400).json({message: "Please provide all required fields"});
+        if (req.body && !req.body.password || !req.body["confirm-password"]) {
+            return res.status(400).json({ message: "Please provide all required fields" });
         }
-        if(req.body.password !== req.body["confirm-password"]) {        
-            return res.status(400).json({message: "Entered passwords don't match"});
+        if (req.body.password !== req.body["confirm-password"]) {
+            return res.status(400).json({ message: "Entered passwords don't match" });
         }
         let user = new User();
         user.email = req.body.email;
@@ -62,4 +62,30 @@ export class AuthenticationController extends BaseController {
         //     res.status(500).json(err    );
         // })
     }
+
+    public facebook = authenticate('facebook', {
+        scope: ['email'],
+        // display: 'popup'
+    });
+
+
+    public facebookCallback = (req: Request, res: Response) => {
+        authenticate('facebook', function (err, user, info) {
+            if (err) {
+                console.log(err);
+                return res.redirect('/');
+            }
+            console.log(user);
+            
+            if (info.message === "Permissions error") return res.redirect('/external-login/' + "000");
+            if (!user) return res.redirect(`/authenticate/?status=${AUTH_SOCIAL_STATUS.FAIL}&message=${info.message}`);
+            var token = user.generateJwt();
+            return res.redirect(`/authenticate/?token=${token}&status=${AUTH_SOCIAL_STATUS.SUCCESS}&message=${info.message}&auth_type=${AUTH_TYPES.FACEBOOK}`);
+            // res.status(200).send({ token: token });
+        })(req, res);
+    }
+
+    // public google = (req: Request, res: Response) => {
+    //     authenticate('google');
+    // }
 }

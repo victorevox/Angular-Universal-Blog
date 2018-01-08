@@ -8,13 +8,15 @@ export var UserSchema: Schema = new Schema({
     email: {
         type: String,
         unique: true,
-        required: true
+        required: true,
+        index: true
     },
     profileImg: {
         type: String
     },
     roles: [{
-        type: String
+        type: String,
+        required: true
     }],
     permissions: [{
         type: String
@@ -22,19 +24,24 @@ export var UserSchema: Schema = new Schema({
     username: {
         type: String,
         unique: true,
-        required: true
+        required: true,
+        index: true
     },
     banned: {
         type: Boolean,
         default: false
     },
+    socialId: {
+        index: true,
+        type: String
+    },
     salt: {
         type: String,
-        required: true
+        // required: true
     },
     hash: {
         type: String,
-        required: true
+        // required: true
     },
     createdAt: {
         type: Date
