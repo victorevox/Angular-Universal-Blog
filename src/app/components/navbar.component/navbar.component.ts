@@ -6,12 +6,14 @@ import { NavigableLink } from "./../../interfaces";
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,
     selector: 'app-navbar',
-    templateUrl: `./navbar.component.html`
+    templateUrl: `./navbar.component.html`,
+    styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
 
     public menuState = false;
     public showSearch = false;
+    public mobileToggle = false;
     public links: NavigableLink[] = [
         {
             name: "Contact",
@@ -33,6 +35,12 @@ export class NavbarComponent {
         let result = /admin\//.test(this._router.routerState.snapshot.url);
         console.log(result);
         return result;
+    }
+
+    public toggleMobile(event) {
+        console.log(this.mobileToggle);
+        
+        this.mobileToggle =! this.mobileToggle;
     }
 
     public isAdmin() {
