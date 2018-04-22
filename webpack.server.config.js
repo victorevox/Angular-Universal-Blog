@@ -16,7 +16,14 @@ module.exports = {
     __dirname: false,
     __filename: false,
   },
-  resolve: { extensions: ['.ts', '.js'] },
+  resolve: {
+    extensions: ['.ts', '.js'],
+    alias: {
+      "@app": path.resolve(__dirname, 'public/src/app'),
+      "@shared": path.resolve(__dirname, 'shared'),
+      "root": path.resolve(__dirname),
+    },
+  },
   // Make sure we include all node_modules etc
   externals: [/(node_modules|main\..*\.js)/, /^(?!\.|\/).+/i, /(node_modules|main\..*\.css)/],
   output: {
@@ -28,7 +35,13 @@ module.exports = {
   module: {
     // exprContextCritical: false,
     rules: [
-      { test: /\.ts$/, loader: 'ts-loader' }
+      {
+        test: /\.ts$/,
+        loader: 'ts-loader',
+        options: {
+          configFile: path.resolve(__dirname, "server/tsconfig.server.json")
+        }
+      }
     ]
   },
   plugins: [
@@ -59,7 +72,7 @@ module.exports = {
     new webpack.DefinePlugin({
       window: undefined,
       document: JSON.stringify({
-        createElement: function(){},
+        createElement: function () { },
       }),
       location: JSON.stringify({
         protocol: 'https',

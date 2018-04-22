@@ -2,7 +2,7 @@ import { MongoError } from "mongodb";
 import { Model } from "mongoose";
 import { Request, Response, NextFunction } from "express";
 import { capitalize } from "lodash";
-import { USER_ROLE, IUser, IResourceListResponse } from "../../src/app/interfaces";
+import { USER_ROLE, IUser, IResourceListResponse } from "@shared/interfaces";
 import { isEmpty } from "lodash";
 
 export class BaseController {

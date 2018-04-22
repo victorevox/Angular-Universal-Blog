@@ -3,7 +3,10 @@ import * as passportLocal from "passport-local";
 import { User, IUserModel } from "./../models/User";
 import { Application } from "express";
 import * as FacebookStrategy from "passport-facebook";
-import { USER_ROLE } from "./../../src/app/interfaces";
+// import { USER_ROLE } from "./../../src/app/interfaces";
+// import { USER_ROLE } from "@app/interfaces";
+import { IUser, USER_ROLE } from "@shared/interfaces/user.interface";
+
 
 const LocalStrategy = passportLocal.Strategy;
 
@@ -14,7 +17,7 @@ export class PassportConfig {
 
         passport.use('local', new LocalStrategy({ usernameField: "email" },
             (username, password, done) => {
-                User.findOne(<IUserModel>{ email: username }).then((user) => {
+                User.findOne(<IUser>{ email: username }).then((user) => {
                     if (!user) {
                         return done(null, false, {
                             message: 'User not found'

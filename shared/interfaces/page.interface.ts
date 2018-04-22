@@ -3,6 +3,6 @@ export interface IPage {
     name: string;
     title?: string;
     content?: string;
-    updatedAt?: string;
-    createdAt?: string
+    updatedAt?: string | Date;
+    createdAt?: string | Date;
 }

@@ -2,7 +2,7 @@
 import { Document, Schema, Model, model, Types } from "mongoose";
 import { randomBytes, pbkdf2Sync } from "crypto";
 import * as jwt from "jsonwebtoken";
-import { IPage } from "./../../src/app/interfaces";
+import { IPage } from "@shared/interfaces";
 
 export var PageSchema: Schema = new Schema({
     name: {
@@ -28,10 +28,11 @@ export var PageSchema: Schema = new Schema({
 
 PageSchema.pre("save", function (next) {
     let now = new Date();
-    if (!this.createdAt) {
-        this.createdAt = now;
+    let page = <IPageModel>this;
+    if (!page.createdAt) {
+        page.createdAt = now;
     }
-    this.updatedAt = new Date();
+    page.updatedAt = new Date();
     next();
 });
 

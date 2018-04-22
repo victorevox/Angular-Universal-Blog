@@ -1,7 +1,8 @@
 import { NgModule, Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core'
 import { Router, NavigationEnd } from "@angular/router";
-import { AuthenticationService, CustomHttpService } from './../../../services';
-import { NavigableLink, IPost, IResourceListResponse, IAuthenticationEvent } from "./../../../interfaces";
+import { AuthenticationService, CustomHttpService } from '@app/services';
+import { IPost, IResourceListResponse, IAuthenticationEvent } from "@shared/interfaces";
+import { NavigableLink } from "@app/interfaces";
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,

@@ -3,8 +3,7 @@ import { Post, IPostModel } from "./../../models";
 import { Error as MongooseError } from "mongoose";
 import { BaseController } from "./../base.controller";
 import * as path from "path";
-import { USER_ROLE, IPost } from "../../../src/app/interfaces";
-import { IResourceListResponse } from "../../../src/app/interfaces/misc.interface";
+import { IResourceListResponse, USER_ROLE, IPost } from "@shared/interfaces";
 
 export class PostController extends BaseController {
 

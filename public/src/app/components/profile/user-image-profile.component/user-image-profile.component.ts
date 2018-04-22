@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 // var imageProfile = require("./../../../../assets/img/profile-placeholder.jpg");
 import { FileUploader } from 'ng2-file-upload';
-import { AuthenticationService } from './../../../services';
+// import { AuthenticationService } from './../../../services';
+import { AuthenticationService } from "@app/services";
 import { AlertsService } from '@jaspero/ng-alerts';
-import { IUser } from './../../../interfaces';
+import { IUser } from '@shared/interfaces/user.interface';
 import { NotificationsService } from 'angular2-notifications';
 
 @Component({

@@ -4,7 +4,7 @@ import { authenticate } from "passport";
 // import * as passport from "passport";
 import { Error as MongooseError } from "mongoose";
 import { BaseController } from "./../base.controller";
-import { USER_ROLE, AUTH_TYPES, AUTH_SOCIAL_STATUS } from "./../../../src/app/interfaces";
+import { USER_ROLE, AUTH_TYPES, AUTH_SOCIAL_STATUS } from "@shared/interfaces";
 
 export class AuthenticationController extends BaseController {
 

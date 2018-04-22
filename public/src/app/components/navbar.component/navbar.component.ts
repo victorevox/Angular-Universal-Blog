@@ -1,7 +1,9 @@
 import { NgModule, Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core'
 import { Router, NavigationEnd } from "@angular/router";
-import { AuthenticationService } from './../../services';
-import { NavigableLink, IAuthenticationEvent } from "./../../interfaces";
+import { AuthenticationService } from '@app/services';
+import { IAuthenticationEvent } from "@shared/interfaces";
+import { NavigableLink } from "@app/interfaces";
+
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,
     selector: 'app-navbar',

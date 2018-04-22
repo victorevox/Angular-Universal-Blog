@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CustomHttpService } from "./../../../../services";
-import { IPost, IResourceListResponse } from './../../../../interfaces';
+import { CustomHttpService } from "@app/services";
+import { IPost, IResourceListResponse } from '@shared/interfaces';
 
 @Component({
   selector: 'app-posts',

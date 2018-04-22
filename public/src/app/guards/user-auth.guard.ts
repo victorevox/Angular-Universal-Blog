@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { CanActivate, Router } from "@angular/router";
 import { AuthenticationService } from "./../services";
-import { USER_ROLE } from "./../interfaces";
+import { USER_ROLE } from "@shared/interfaces";
 import { AlertsService } from "@jaspero/ng-alerts";
 
 @Injectable()

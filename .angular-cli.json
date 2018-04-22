@@ -41,7 +41,7 @@
         "index": "index.html",
         "main": "main.server.ts",
         "test": "test.ts",
-        "tsconfig": "tsconfig.server.json",
+        "tsconfig": "tsconfig.app-server.json",
         "testTsconfig": "tsconfig.spec.json",
         "prefix": "app",
         "styles": [

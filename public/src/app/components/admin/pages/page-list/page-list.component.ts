@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IPage } from "./../../../../interfaces";
+import { IPage } from "@shared/interfaces";
 import { Router } from "@angular/router";
 
 @Component({

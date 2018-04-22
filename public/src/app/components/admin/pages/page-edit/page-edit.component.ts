@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { IPage, IResourceListResponse } from "./../../../../interfaces"
-import { CustomHttpService } from "./../../../../services";
+import { IPage, IResourceListResponse } from "@shared/interfaces"
+import { CustomHttpService } from "@app/services";
 import { Router, ActivatedRoute } from "@angular/router";
 import { AlertsService } from '@jaspero/ng-alerts';
 import { NgForm, NgModel } from '@angular/forms';

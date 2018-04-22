@@ -7,7 +7,16 @@
     "module": "commonjs",
     "types": [
       "node"
-    ]
+    ],
+    "traceResolution": true,
+    "paths": {
+      "@app/*": [
+        "app/*"
+      ],
+      "@shared/*": [
+        "../../shared/*"
+      ]
+    }
   },
   "exclude": [
     "test.ts",

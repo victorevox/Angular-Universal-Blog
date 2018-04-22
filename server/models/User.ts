@@ -2,7 +2,8 @@
 import { Document, Schema, Model, model, Types } from "mongoose";
 import { randomBytes, pbkdf2Sync } from "crypto";
 import * as jwt from "jsonwebtoken";
-import { IUser } from "./../../src/app/interfaces";
+// import { IUser } from "./../../src/app/interfaces";
+import { IUser } from "@shared/interfaces/user.interface";
 
 export var UserSchema: Schema = new Schema({
     email: {
@@ -50,8 +51,9 @@ export var UserSchema: Schema = new Schema({
 
 UserSchema.pre("save", function (next) {
     let now = new Date();
-    if (!this.createdAt) {
-        this.createdAt = now;
+    let user = <IUserModel>this;
+    if (!user.createdAt) {
+        user.createdAt = now;
     }
     next();
 });
@@ -93,12 +95,15 @@ UserSchema.methods.generateJwt = function () {
 export var User: Model<IUserModel> = model<IUserModel>("User", UserSchema);
 
 export interface IUserModel extends IUser, Document {
-    hash: string;
-    salt: string;
+    hash?: string;
+    salt?: string;
 
     savePassword(password: string);
     generateJwt(): string;
     validPassword(password: string): boolean
+
+    socialId?: string;
+    banned?: boolean;
 
     //public static validateToken(token: string){}    
 

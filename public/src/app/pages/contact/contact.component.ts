@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { CustomHttpService } from './../../services';
-import { IResourceListResponse, IPage } from "./../../interfaces";
+import { CustomHttpService } from '@app/services';
+import { IResourceListResponse, IPage } from "@shared/interfaces";
 
 @Component({
   selector: 'contact',

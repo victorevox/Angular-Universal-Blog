@@ -17,13 +17,19 @@
       "es2017",
       "dom"
     ],
+    "baseUrl": ".",
     "paths": {
-      "@app/*": ["app/*"]
-    },
-    "baseUrl": "."
+      "@shared/*": [
+        "shared/*"
+      ],
+      "@app/*": [
+        "public/src/app/*"
+      ]
+    }
   },
   "include": [
     "public/src/**/*",
+    "server/**/*",
     "node_modules/ngx-quill-editor/quillEditor.component.ts",
     "node_modules/ngx-quill-editor/quillEditor.module.ts",
     "node_modules/ngx-quill-editor/index.ts"
