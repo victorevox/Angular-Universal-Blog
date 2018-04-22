@@ -12,6 +12,9 @@
       "@shared/*": ["../shared/*"]
     }
   },
+  "include": [
+    "./**/*"
+  ],
   "exclude": [
     "test.ts",
     "**/*.spec.ts"
