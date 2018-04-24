@@ -2,6 +2,7 @@
 
 const path = require('path');
 const webpack = require('webpack');
+const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
   devtool: 'inline-source-map',
@@ -25,7 +26,20 @@ module.exports = {
     },
   },
   // Make sure we include all node_modules etc
-  externals: [/(node_modules|main\..*\.js)/, /^(?!\.|\/).+/i, /(node_modules|main\..*\.css)/],
+  // externals: [/(node_modules|main\..*\.js)/, /^(?!\.|\/).+/i, /(node_modules|main\..*\.css)/],
+  externals: [
+    // function (context, request, callback) {
+    //   // console.log(request);
+      
+    //   if (/node_modules/.test(context)) {
+    //     console.log(context);
+    //     return callback(null, 'commonjs ' + request);
+    //   }
+    //   callback();
+    // }
+    nodeExternals()
+  ],
+  // externals: [/node_modules/],
   output: {
     // Puts the output at the root of the dist folder
     path: path.join(__dirname, 'dist'),

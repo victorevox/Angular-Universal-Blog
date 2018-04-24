@@ -43,33 +43,36 @@ export class PassportConfig {
         ));
 
         let host = process.env.APP_DOMAIN || '';
-        passport.use(new FacebookStrategy({
-            clientID: process.env.FACEBOOK_APP_ID || '',
-            clientSecret: process.env.FACEBOOK_APP_SECRET || '',
-            callbackURL: `${host}/api/authentication/facebook/callback`,
-            profileFields: ['id', 'email', 'name'],
-        },
-            function (accessToken, refreshToken, profile, cb) {
-                let email = profile.emails[0];
-                email = email && email.value ? email.value : email;
-                User.findOne({ socialId: profile.id, email: email }, function (err, user) {
-                    if (err || user) {
-                        return cb(err, user);
-                    }
-                    if (!user) {
-                        console.log(profile);
-                        user = new User();
-                        user.email = email;
-                        user.username = email;
-                        user.socialId = profile.id;
-                        user.roles = [USER_ROLE.USER];
-                        user.save((err, user) => {
+
+        if(process.env.FACEBOOK_APP_ID && process.env.FACEBOOK_APP_SECRET) {
+            passport.use(new FacebookStrategy({
+                clientID: process.env.FACEBOOK_APP_ID || '',
+                clientSecret: process.env.FACEBOOK_APP_SECRET || '',
+                callbackURL: `${host}/api/authentication/facebook/callback`,
+                profileFields: ['id', 'email', 'name'],
+            },
+                function (accessToken, refreshToken, profile, cb) {
+                    let email = profile.emails[0];
+                    email = email && email.value ? email.value : email;
+                    User.findOne({ socialId: profile.id, email: email }, function (err, user) {
+                        if (err || user) {
                             return cb(err, user);
-                        })
-                    }
-                });
-            }
-        ));
+                        }
+                        if (!user) {
+                            console.log(profile);
+                            user = new User();
+                            user.email = email;
+                            user.username = email;
+                            user.socialId = profile.id;
+                            user.roles = [USER_ROLE.USER];
+                            user.save((err, user) => {
+                                return cb(err, user);
+                            })
+                        }
+                    });
+                }
+            ));
+        }
 
         passport.serializeUser(function (user, done) {
             done(null, user);
