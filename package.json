@@ -17,7 +17,8 @@
   ],
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "init": "node config/scripts/init.js",
+    "start": "ng serve --proxy-config config/ng/proxy.json",
     "build": "ng build",
     "build:client-and-server-bundles": "ng build --prod && ng build --prod --app 1 --output-hashing=false",
     "build:prerender": "npm run build:client-and-server-bundles && npm run webpack:server && npm run generate:prerender",
@@ -51,6 +52,7 @@
     "crypto": "^1.0.1",
     "dotenv": "^5.0.1",
     "formidable": "^1.2.1",
+    "http-status-codes": "^1.3.0",
     "jsonwebtoken": "^8.2.1",
     "lodash": "^4.17.5",
     "method-override": "^2.3.10",

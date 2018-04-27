@@ -19,6 +19,7 @@ import { config as dotEnvConfig } from "dotenv";
 // enableProdMode();
 
 import { api_routes } from "@server/routes/api.routes";
+import { ErrorMiddleware } from "@server/middlewares/express/error.middleware";
 import { dbConfig } from '@server/config/db';
 import { PassportConfig } from "@server/config/passport";
 
@@ -97,6 +98,9 @@ app.get('*', (req, res) => {
   // res.render('index', { req });
   res.sendFile(join(DIST_FOLDER, 'browser/index.html'))
 });
+
+// add Error middleware, all errors will be catched by this
+app.use(ErrorMiddleware.init);
 
 // Start up the Node server
 app.listen(PORT, () => {

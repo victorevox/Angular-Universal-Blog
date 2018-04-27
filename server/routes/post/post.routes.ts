@@ -3,9 +3,7 @@ import { PostController } from "@server/controllers";
 
 export const post_router = Router();
 
-let Controller = new PostController();
-
-post_router.get('/post', Controller.list);
-post_router.get('/post/:id', Controller.list);
-post_router.put('/post/:id', Controller.update);
-post_router.post('/post', Controller.create);
+post_router.get('/post', PostController.list);
+post_router.get('/post/:id', PostController.list);
+post_router.put('/post/:id', PostController.update);
+post_router.post('/post', PostController.create);

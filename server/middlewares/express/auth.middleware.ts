@@ -14,9 +14,6 @@ import { decode } from "jsonwebtoken";
 // }
 
 export class AuthMiddleware {
-    constructor() {
-
-    }
 
     public static init = (req: Request, res: Response, next: NextFunction) => {
         let user: IUser = null;

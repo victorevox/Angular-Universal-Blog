@@ -5,16 +5,12 @@ import { BaseController } from "@server/controllers/base.controller";
 import { IncomingForm } from "formidable";
 import * as path from "path";
 
-export class UserController extends BaseController {
+export class UserController {
 
-    constructor() {
-        super()
-    }
-
-    public update = (req: Request, res: Response) => {
-        if(!this.isAuthenticated(req)) {
-            return this.handleError(new Error("You must be authenticated"), req, res);
-        }
+    public static update = (req: Request, res: Response, next: NextFunction) => {
+        // if(!this.isAuthenticated(req)) {
+        //     return this.handleError(new Error("You must be authenticated"), req, res);
+        // }
         let form = new IncomingForm();
         console.log(__dirname);
         let uploadDir = path.join(__dirname, '/../statics/img');
@@ -37,11 +33,11 @@ export class UserController extends BaseController {
                     (<IUserModel>req.user).save().then((user) => {
                         return res.status(200).json({ message: "Working", token: user.generateJwt(), user: user.toJSON() });
                     }).catch(err => {
-                        this.handleError(err, req, res);
+                        next(err);
                     })
                 })
             } catch (error) {
-                this.handleError(error, req, res);
+                next(error);
             }
         })
     }

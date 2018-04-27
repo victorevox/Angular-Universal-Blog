@@ -19,7 +19,7 @@ export class BaseController {
 
     private setController(req: Request, res: Response, model: any, next?: NextFunction) {
         this._req = req,
-            this._res = res;
+        this._res = res;
         this._model = model;
         this._next = next;
     }

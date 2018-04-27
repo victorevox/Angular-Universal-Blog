@@ -5,15 +5,11 @@ import { authenticate } from "passport";
 import { Error as MongooseError } from "mongoose";
 import { BaseController } from "@server/controllers/base.controller";
 import { USER_ROLE, AUTH_TYPES, AUTH_SOCIAL_STATUS } from "@shared/interfaces";
+import { getDocsByQuery } from "@server/utils/helpers/query.helper";
 
-export class AuthenticationController extends BaseController {
+export class AuthenticationController {
 
-    constructor() {
-        super()
-    }
-
-    public register = (req: Request, res: Response) => {
-        let self = this;
+    public static register = (req: Request, res: Response, next: NextFunction) => {
         if (req.body && !req.body.password || !req.body["confirm-password"]) {
             return res.status(400).json({ message: "Please provide all required fields" });
         }
@@ -28,7 +24,7 @@ export class AuthenticationController extends BaseController {
         user.save((err: { code: number, errmsg: string }, user) => {
             if (err) {
                 console.log(err);
-                return self.handleError(err, req, res);
+                return next(err);
             }
             if (!user) {
                 return res.status(500).json({ message: "User not found" })
@@ -37,7 +33,7 @@ export class AuthenticationController extends BaseController {
         });
     }
 
-    public login = (req: Request, res: Response, next: NextFunction) => {
+    public static login = (req: Request, res: Response, next: NextFunction) => {
         authenticate('local', function (err, user: IUserModel, info) {
             if (err) {
                 console.log(err);
@@ -53,23 +49,23 @@ export class AuthenticationController extends BaseController {
         })(req, res, next);
     }
 
-    public list = (req: Request, res: Response) => {
-        super._list(req, res, User);
-        // User.find().then(users => {
-        //     res.status(200).json(users);
-        // }, err => {
-        //     console.log(err);
-        //     res.status(500).json(err    );
-        // })
+    public static list = (req: Request, res: Response, next: NextFunction) => {
+        getDocsByQuery(User, req, { }).then(docs => {
+            res.json({ data: docs });
+        }, err => {
+            console.log(err);
+            // { message: ERROR_MESSAGES.ON_RESOURCE_QUERY }
+            return next(err);
+        })
     }
 
-    public facebook = authenticate('facebook', {
+    public static facebook = authenticate('facebook', {
         scope: ['email'],
         // display: 'popup'
     });
 
 
-    public facebookCallback = (req: Request, res: Response) => {
+    public static facebookCallback = (req: Request, res: Response) => {
         authenticate('facebook', function (err, user, info) {
             if (err) {
                 console.log(err);

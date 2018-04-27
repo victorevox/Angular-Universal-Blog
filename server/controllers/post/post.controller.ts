@@ -4,26 +4,29 @@ import { Error as MongooseError } from "mongoose";
 import { BaseController } from "@server/controllers/base.controller";
 import * as path from "path";
 import { IResourceListResponse, USER_ROLE, IPost } from "@shared/interfaces";
+import { getDocsByQuery } from "@server/utils/helpers/query.helper";
 
-export class PostController extends BaseController {
+export class PostController {
 
-    constructor() {
-        super()
+    public static list = (req: Request, res: Response, next: NextFunction) => {
+        getDocsByQuery(Post, req, { }).then(docs => {
+            res.json({ data: docs });
+        }, err => {
+            console.log(err);
+            // { message: ERROR_MESSAGES.ON_RESOURCE_QUERY }
+            return next(err);
+        })
     }
 
-    public list = (req: Request, res: Response) => {
-        this._list(req, res, Post);
-    }
-
-    public update = (req: Request, res: Response) => {
-        if (!this.isAuthenticated(req, USER_ROLE.ADMIN)) {
-            return this.handleError(new Error("You are unauthorized"), req, res);
-        }
+    public static update = (req: Request, res: Response, next: NextFunction) => {
+        // if (!this.isAuthenticated(req, USER_ROLE.ADMIN)) {
+        //     return this.handleError(new Error("You are unauthorized"), req, res);
+        // }
         let id = req.params.id;
         let data: IPost = req.body;
-        if(!id) return this.handleError(new Error("You must provide resource ID"), req, res);
+        if(!id) return next(new Error("You must provide resource ID"));
         Post.findById(id).then(post => {
-            if(!post) return this.handleError(new Error("Resource not found"), req, res);
+            if(!post) return next(new Error("Resource not found"));
             if(data.content) {
                 post.content = data.content;
             }
@@ -33,25 +36,25 @@ export class PostController extends BaseController {
             post.save().then(post => {
                 return res.status(200).json({ message: "Successfully updated", post: post })
             }).catch(err => {
-                this.handleError(err,req,res);
+                return next(err);
             })
         })
 
     }
 
-    public create = (req: Request, res: Response) => {
-        if (!this.isAuthenticated(req, USER_ROLE.ADMIN)) {
-            return this.handleError(new Error("You are unauthorized"), req, res);
-        }
+    public static create = (req: Request, res: Response, next: NextFunction) => {
+        // if (!this.isAuthenticated(req, USER_ROLE.ADMIN)) {
+        //     return this.handleError(new Error("You are unauthorized"), req, res);
+        // }
         let data: IPost = req.body;
-        if (!data) return this.handleError(new Error("You must provide all required fields"), req, res);
+        if (!data) return next(new Error("You must provide all required fields"));
         let post = new Post();
         post.title = data.title;
         post.content = data.content;
         post.save().then(post => {
             return res.status(200).json({ message: "Post inserted successfully", post: post })
         }).catch(err => {
-            return this.handleError(err, req, res);
+            return next(err);
         })
     }
 }
