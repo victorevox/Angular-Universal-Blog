@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
-import { Post, IPostModel } from "./../../models";
+import { Post, IPostModel } from "@server/models";
 import { Error as MongooseError } from "mongoose";
-import { BaseController } from "./../base.controller";
+import { BaseController } from "@server/controllers/base.controller";
 import * as path from "path";
 import { IResourceListResponse, USER_ROLE, IPost } from "@shared/interfaces";
 

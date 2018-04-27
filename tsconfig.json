@@ -24,6 +24,9 @@
       ],
       "@app/*": [
         "public/src/app/*"
+      ],
+      "@server/*": [
+        "server/*"
       ]
     }
   },

@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
-import { Page, IPageModel } from "./../../models";
+import { Page, IPageModel } from "@server/models";
 import { Error as MongooseError } from "mongoose";
-import { BaseController } from "./../base.controller";
+import { BaseController } from "@server/controllers/base.controller";
 import * as path from "path";
 import { USER_ROLE, IPage, IResourceListResponse } from "@shared/interfaces";
 

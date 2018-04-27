@@ -1,6 +1,6 @@
 import * as passport from "passport";
 import * as passportLocal from "passport-local";
-import { User, IUserModel } from "./../models/User";
+import { User, IUserModel } from "@server/models/User";
 import { Application } from "express";
 import * as FacebookStrategy from "passport-facebook";
 // import { USER_ROLE } from "./../../src/app/interfaces";

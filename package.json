@@ -24,7 +24,7 @@
     "build:ssr": "npm run build:client-and-server-bundles && npm run webpack:server",
     "start:ssr": "ng build --watch && ng build --watch --app 1 && npm run webpack:server",
     "generate:prerender": "cd dist && node prerender",
-    "webpack:server": "webpack --config webpack.server.config.js --progress --colors",
+    "webpack:server": "webpack --config config/webpack/webpack.server.config.js --progress --colors",
     "serve:prerender": "cd dist/browser && http-server",
     "serve:ssr": "node dist/server"
   },

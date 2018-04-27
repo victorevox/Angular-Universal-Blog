@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
-import { User, IUserModel } from "./../../models";
+import { User, IUserModel } from "@server/models";
 import { Error as MongooseError } from "mongoose";
-import { BaseController } from "./../base.controller";
+import { BaseController } from "@server/controllers/base.controller";
 import { IncomingForm } from "formidable";
 import * as path from "path";
 

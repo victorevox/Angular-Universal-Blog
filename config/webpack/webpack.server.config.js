@@ -4,11 +4,13 @@ const path = require('path');
 const webpack = require('webpack');
 const nodeExternals = require('webpack-node-externals');
 
+const root = path.resolve(__dirname, "../../");
+
 module.exports = {
   devtool: 'inline-source-map',
   entry: {
     // This is our Express server for Dynamic universal
-    server: './server.ts',
+    server: path.join(root, "server/server.ts"),
     // This is an example of Static prerendering (generative)
     // prerender: './prerender.ts'
   },
@@ -20,9 +22,10 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.js'],
     alias: {
-      "@app": path.resolve(__dirname, 'public/src/app'),
-      "@shared": path.resolve(__dirname, 'shared'),
-      "root": path.resolve(__dirname),
+      "@app": path.join(root, 'public/src/app'),
+      "@shared": path.join(root, 'shared'),
+      "@server": path.join(root, "server"),
+      "root": path.join(root),
     },
   },
   // Make sure we include all node_modules etc
@@ -37,12 +40,14 @@ module.exports = {
     //   }
     //   callback();
     // }
-    nodeExternals()
+    nodeExternals({
+      whitelist: ['@server']
+    })
   ],
   // externals: [/node_modules/],
   output: {
     // Puts the output at the root of the dist folder
-    path: path.join(__dirname, 'dist'),
+    path: path.join(root, 'dist'),
     filename: '[name].js',
     libraryTarget: 'commonjs',
   },
@@ -53,7 +58,7 @@ module.exports = {
         test: /\.ts$/,
         loader: 'ts-loader',
         options: {
-          configFile: path.resolve(__dirname, "server/tsconfig.server.json")
+          configFile: path.join(root, "server/tsconfig.server.json")
         }
       }
     ]
@@ -62,25 +67,25 @@ module.exports = {
     new webpack.ContextReplacementPlugin(
       // fixes WARNING Critical dependency: the request of a dependency is an expression
       /(.+)?angular(\\|\/)core(.+)?/,
-      path.join(__dirname, 'src'), // location of your src
+      path.join(root, 'src'), // location of your src
       {} // a map of your routes
     ),
     new webpack.ContextReplacementPlugin(
       // fixes WARNING Critical dependency: the request of a dependency is an expression
       /(.+)?express(\\|\/)(.+)?/,
-      path.join(__dirname, 'src'),
+      path.join(root, 'src'),
       {}
     ),
     new webpack.ContextReplacementPlugin(
       // fixes WARNING Critical dependency: the request of a dependency is an expression
       /(.+)?mongodb(\\|\/)(.+)?/,
-      path.join(__dirname, 'server'),
+      path.join(root, 'server'),
       {}
     ),
     new webpack.ContextReplacementPlugin(
       // fixes WARNING Critical dependency: the request of a dependency is an expression
       /(.+)?mongoose(\\|\/)(.+)?/,
-      path.join(__dirname, 'server'),
+      path.join(root, 'server'),
       {}
     ),
     new webpack.DefinePlugin({
@@ -95,9 +100,9 @@ module.exports = {
     }),
     new webpack.NormalModuleReplacementPlugin(
       /quill.js/,
-      path.resolve(__dirname, 'src/server-mocks/empty.js')
+      path.resolve(root, 'src/server-mocks/empty.js')
       // or if you need to make some type of specific mock (copy/pasting) and editing
-      // path.resolve(__dirname, 'src/server-mocks/primeng.js')
+      // path.resolve(root, 'src/server-mocks/primeng.js')
     ),
   ]
 }

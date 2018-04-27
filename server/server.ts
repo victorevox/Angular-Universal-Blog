@@ -1,7 +1,7 @@
 
 import * as express from 'express';
 import * as methodOverride from "method-override";
-import { join } from 'path';
+import { join, resolve } from 'path';
 import { readFileSync, existsSync } from 'fs';
 import { json, urlencoded } from "body-parser";
 import { config as dotEnvConfig } from "dotenv";
@@ -18,9 +18,9 @@ import { config as dotEnvConfig } from "dotenv";
 // // Faster server renders w/ Prod mode (dev mode never needed)
 // enableProdMode();
 
-import { api_routes } from "./server/routes/api.routes";
-import { dbConfig } from './server/config/db';
-import { PassportConfig } from "./server/config/passport";
+import { api_routes } from "@server/routes/api.routes";
+import { dbConfig } from '@server/config/db';
+import { PassportConfig } from "@server/config/passport";
 
 const DIST_FOLDER = join(process.cwd(), 'dist');
 
@@ -45,7 +45,9 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 
 // Our index.html we'll use as our template
-const template = readFileSync(join(DIST_FOLDER, 'browser', 'index.html')).toString();
+if(existsSync(resolve(__dirname, 'browser/index.html'))) {
+  const template = readFileSync(join(DIST_FOLDER, 'browser', 'index.html')).toString();
+}
 
 // * NOTE :: leave this as require() since this file is built Dynamically from webpack
 // const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require('./dist/server/main.bundle');
