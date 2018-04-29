@@ -4,8 +4,9 @@ import { authenticate } from "passport";
 // import * as passport from "passport";
 import { Error as MongooseError } from "mongoose";
 import { BaseController } from "@server/controllers/base.controller";
-import { USER_ROLE, AUTH_TYPES, AUTH_SOCIAL_STATUS } from "@shared/interfaces";
+import { USER_ROLE, AUTH_TYPES, AUTH_SOCIAL_STATUS, IResourceListResponse } from "@shared/interfaces";
 import { getDocsByQuery } from "@server/utils/helpers/query.helper";
+import { IResourceCreateResponse } from "@shared/interfaces/misc.interface";
 
 export class AuthenticationController {
 
@@ -29,7 +30,7 @@ export class AuthenticationController {
             if (!user) {
                 return res.status(500).json({ message: "User not found" })
             }
-            return res.status(200).json({ message: "User saved", user: user });
+            return res.status(200).json(<IResourceCreateResponse>{ message: "User saved", doc: user });
         });
     }
 
@@ -51,7 +52,7 @@ export class AuthenticationController {
 
     public static list = (req: Request, res: Response, next: NextFunction) => {
         getDocsByQuery(User, req, { }).then(docs => {
-            res.json({ data: docs });
+            res.json(<IResourceListResponse>{ documents: docs });
         }, err => {
             console.log(err);
             // { message: ERROR_MESSAGES.ON_RESOURCE_QUERY }

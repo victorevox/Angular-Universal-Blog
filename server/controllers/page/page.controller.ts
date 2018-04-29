@@ -5,6 +5,7 @@ import { BaseController } from "@server/controllers/base.controller";
 import * as path from "path";
 import { USER_ROLE, IPage, IResourceListResponse } from "@shared/interfaces";
 import { getDocsByQuery } from "@server/utils/helpers/query.helper";
+import { IResourceUpdateResponse } from "@shared/interfaces/misc.interface";
 
 //Create pages if not on DB
 Page.findOne({ name: "Contact" }).then(page => {
@@ -30,7 +31,7 @@ export class PageController {
 
     public static list = (req: Request, res: Response, next: NextFunction) => {
         getDocsByQuery(Page, req, {}).then(docs => {
-            res.json({ data: docs });
+            res.json(<IResourceListResponse>{ documents: docs });
         }, err => {
             console.log(err);
             // { message: ERROR_MESSAGES.ON_RESOURCE_QUERY }
@@ -54,7 +55,7 @@ export class PageController {
                 post.title = data.title
             }
             post.save().then(post => {
-                return res.status(200).json({ message: "Successfully updated", post: post })
+                return res.status(200).json(<IResourceUpdateResponse>{ message: "Successfully updated", doc: post })
             }).catch(err => {
                 return next(err);
             })

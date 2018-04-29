@@ -5,12 +5,13 @@ import { BaseController } from "@server/controllers/base.controller";
 import * as path from "path";
 import { IResourceListResponse, USER_ROLE, IPost } from "@shared/interfaces";
 import { getDocsByQuery } from "@server/utils/helpers/query.helper";
+import { IResourceUpdateResponse, IResourceCreateResponse } from "@shared/interfaces/misc.interface";
 
 export class PostController {
 
     public static list = (req: Request, res: Response, next: NextFunction) => {
         getDocsByQuery(Post, req, { }).then(docs => {
-            res.json({ data: docs });
+            res.json(<IResourceListResponse>{ documents: docs });
         }, err => {
             console.log(err);
             // { message: ERROR_MESSAGES.ON_RESOURCE_QUERY }
@@ -34,7 +35,7 @@ export class PostController {
                 post.title = data.title
             }
             post.save().then(post => {
-                return res.status(200).json({ message: "Successfully updated", post: post })
+                return res.status(200).json(<IResourceUpdateResponse>{ message: "Successfully updated", doc: post })
             }).catch(err => {
                 return next(err);
             })
@@ -52,7 +53,7 @@ export class PostController {
         post.title = data.title;
         post.content = data.content;
         post.save().then(post => {
-            return res.status(200).json({ message: "Post inserted successfully", post: post })
+            return res.status(200).json(<IResourceCreateResponse>{ message: "Post inserted successfully", doc: post })
         }).catch(err => {
             return next(err);
         })
