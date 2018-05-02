@@ -4,6 +4,7 @@ import { randomBytes, pbkdf2Sync } from "crypto";
 import * as jwt from "jsonwebtoken";
 // import { IUser } from "./../../src/app/interfaces";
 import { IUser } from "@shared/interfaces/user.interface";
+import { MODEL_NAME_DEFINITIONS } from "@server/utils/constants/misc.constants";
 
 export var UserSchema: Schema = new Schema({
     email: {
@@ -92,7 +93,7 @@ UserSchema.methods.generateJwt = function () {
     return token;
 };
 
-export var User: Model<IUserModel> = model<IUserModel>("User", UserSchema);
+export var User: Model<IUserModel> = model<IUserModel>(MODEL_NAME_DEFINITIONS.USER, UserSchema);
 
 export interface IUserModel extends IUser, Document {
     hash?: string;
@@ -121,24 +122,3 @@ UserSchema.set('toJSON', {
         };
     }
 });
-
-// export abstract class UserModel implements IUserModel {
-//     constructor(parameters) {
-        
-//     }
-
-//     _id;
-//     __v;
-//     banned;
-//     base;
-
-//     hash;
-//     salt;
-
-//     savePassword(password: string){};
-//     validPassword(password: string){};
-//     generateJwt(){};
-
-//     public static validateToken(token: string){}    
-    
-// }

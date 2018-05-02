@@ -10,8 +10,7 @@ const envExamplePath = path.resolve(__dirname, "../../.env.example");
 // check if .env exists, if not create it
 if(!fs.existsSync(envPath)) {
     console.log("Env file not found, creating file");
-    fs.copyFileSync(envExamplePath, envPath);
-    
+    fs.writeFileSync(envPath, fs.readFileSync(envExamplePath));
 }
 
 // read env and check if JWT_SECRET exist, if not generate random one

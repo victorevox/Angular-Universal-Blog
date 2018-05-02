@@ -20,7 +20,7 @@ import { config as dotEnvConfig } from "dotenv";
 
 import { api_routes } from "@server/routes/api.routes";
 import { ErrorMiddleware } from "@server/middlewares/express/error.middleware";
-import { dbConfig } from '@server/config/db';
+import { connectDb } from '@server/config/db';
 import { PassportConfig } from "@server/config/passport";
 
 const DIST_FOLDER = join(process.cwd(), 'dist');
@@ -60,8 +60,8 @@ app.use(urlencoded({ extended: true })); // parse application/x-www-form-urlenco
 app.use(methodOverride('X-HTTP-Method-Override'));
 // app.use(filter());
 
-//Config DB
-dbConfig();
+//Connect to main DB
+connectDb();
 
 //Config Passport
 PassportConfig.config(app);

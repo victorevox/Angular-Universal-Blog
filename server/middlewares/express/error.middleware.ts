@@ -5,15 +5,6 @@ import { User, IUserModel } from "@server/models";
 import { decode } from "jsonwebtoken";
 import * as httpStatusCodes from "http-status-codes";
 
-// declare global {
-//     namespace Express {
-//         interface Request {
-//             // authInfo?: any;
-//             user?: IUserModel;
-//         }
-//     }
-// }
-
 export class ErrorMiddleware {
 
     public static init(err: any, req: Request, res: Response, next: NextFunction) {

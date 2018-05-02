@@ -3,6 +3,7 @@ import { Document, Schema, Model, model, Types } from "mongoose";
 import { randomBytes, pbkdf2Sync } from "crypto";
 import * as jwt from "jsonwebtoken";
 import { IPage } from "@shared/interfaces";
+import { MODEL_NAME_DEFINITIONS } from "@server/utils/constants/misc.constants";
 
 export var PageSchema: Schema = new Schema({
     name: {
@@ -36,7 +37,7 @@ PageSchema.pre("save", function (next) {
     next();
 });
 
-export var Page: Model<IPageModel> = model<IPageModel>("Page", PageSchema);
+export var Page: Model<IPageModel> = model<IPageModel>(MODEL_NAME_DEFINITIONS.PAGE, PageSchema);
 
 export interface IPageModel extends IPage, Document {
     

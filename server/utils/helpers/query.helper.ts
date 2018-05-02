@@ -90,28 +90,6 @@ export const getDocsByQuery = (model: Model<any>, req: Request, options) => {
             // return res.status(200).json( { message: queryParams } )
         }
 
-        // add some server defined query restrinctions
-        // if model schema "_company" property exists and ignoreCompanyRelation option is not defined, the append query restriction , to retrieve 
-        if (model.schema.path("_company") && !options.ignoreCompanyRelation) {
-            // if there is not user authenticated, return an empty array
-            if (!req.user || !req.user._id) {
-                query.and({
-                    _company: {
-                        $eq: null
-                    }
-                })
-            } else {
-                query.or([{
-                    _company: req.user._company
-                }, {
-                    _company: {
-                        $eq: null
-                    }
-                }])
-            }
-
-
-        }
         query.then(docs => {
             docs = queryParams.es_query && queryParams.es_raw && docs || queryParams.es_query && docs.hits && docs.hits.hits || docs;
             if (queryParams.es_query && !queryParams.es_raw && !queryParams.es_nested_source) {
