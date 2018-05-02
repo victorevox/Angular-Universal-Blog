@@ -6,13 +6,21 @@
     "module": "commonjs",
     "types": [
       "node"
-    ]
+    ],
+    "paths": {
+      "@app/*": [
+        "app/*"
+      ],
+      "@shared/*": [
+        "../../shared/*"
+      ]
+    }
   },
   "include": [
-    "./**/*",
+    "./**/*"/* ,
     "../../node_modules/ngx-quill-editor/quillEditor.component.ts",
     "../../node_modules/ngx-quill-editor/quillEditor.module.ts",
-    "../../node_modules/ngx-quill-editor/index.ts"
+    "../../node_modules/ngx-quill-editor/index.ts" */
   ],
   "exclude": [
     "test.ts",

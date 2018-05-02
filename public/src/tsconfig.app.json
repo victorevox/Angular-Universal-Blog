@@ -3,12 +3,11 @@
   "compilerOptions": {
     "outDir": "../../out-tsc/app",
     "baseUrl": "./",
-    // "module": "es2015",
     "module": "commonjs",
     "types": [
       "node"
     ],
-    "traceResolution": true,
+    "traceResolution": false,
     "paths": {
       "@app/*": [
         "app/*"
