@@ -10,7 +10,6 @@ import { FormsModule } from "@angular/forms";
 import { QuillEditorModule } from 'ngx-quill-editor';
 import { platform } from "./../../../environments/platform";
 
-
 @NgModule({
     declarations: [
         // AdminComponent,
@@ -40,6 +39,9 @@ import { platform } from "./../../../environments/platform";
             },
         ])
     ],
+    exports: [
+        RouterModule
+    ]
     // providers: [
     //     AdminAuthGuard
     // ]

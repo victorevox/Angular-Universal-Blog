@@ -40,8 +40,9 @@ module.exports = {
     //   }
     //   callback();
     // }
+    /main\.bundle/,
     nodeExternals({
-      whitelist: ['@server']
+      whitelist: ['@server'],
     })
   ],
   // externals: [/node_modules/],

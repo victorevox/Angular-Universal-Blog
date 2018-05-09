@@ -3,19 +3,20 @@ import { RouterModule } from '@angular/router'
 import { AdminComponent } from "./../../pages";
 import { AdminAuthGuard } from "./../../guards";
 import { SidebarComponent } from "./../../components";
-import { DashboardComponent, PostFormComponent, PostListComponent } from "./../../components/admin";
+import { DashboardComponent, PostFormComponent, PostListComponent, PageEditComponent } from "./../../components/admin";
 import { CommonModule } from '@angular/common';
 import { FormsModule } from "@angular/forms";
+import { QuillEditorModule } from '@app/../server-mocks/modules/quill-editor/quill-editor.module';
 import { AdminCommonModule } from "./admin.common.module";
 import { platform } from "./../../../environments/platform";
-
 
 @NgModule({
     declarations: [
         // AdminComponent,
         // SidebarComponent,
         // DashboardComponent,
-        // // PostFormComponent,
+        PostFormComponent,
+        PageEditComponent
         // PostListComponent,
     ],
     imports: [
@@ -39,6 +40,6 @@ import { platform } from "./../../../environments/platform";
     //     AdminAuthGuard
     // ]
 })
-export class AdminServerModule {
+export class AdminModule {
 
 }

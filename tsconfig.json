@@ -19,6 +19,9 @@
     ],
     "baseUrl": ".",
     "paths": {
+      "@appsrc/*": [
+        "./public/src/*"
+      ],
       "@shared/*": [
         "shared/*"
       ],

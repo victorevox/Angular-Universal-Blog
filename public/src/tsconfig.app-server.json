@@ -13,6 +13,9 @@
       ],
       "@shared/*": [
         "../../shared/*"
+      ],
+      "lazy_modules/admin/admin.browser": [
+        "./app/lazy_modules/admin/server.browser"
       ]
     }
   },
@@ -25,8 +28,5 @@
   "exclude": [
     "test.ts",
     "**/*.spec.ts"
-  ],
-  "angularCompilerOptions": {
-    "entryModule": "app/app.server.module#AppServerModule"
-  }
+  ]
 }

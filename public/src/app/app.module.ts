@@ -15,8 +15,6 @@ import { ROUTES } from "./app.routing";
 import { BASE_SERVICES } from "./services";
 import { GUARDS } from "./guards";
 
-import { AdminModule } from "./lazy_modules/admin/admin.browser.module";
-import { AdminServerModule } from "./lazy_modules/admin/admin.server.module";
 import { CustomHttpService } from "./services";
 
 @NgModule({
