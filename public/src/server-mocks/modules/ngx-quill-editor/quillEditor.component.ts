@@ -1,4 +1,4 @@
-import { Component, NgModule, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 export interface CustomOption {
     import: string;
@@ -30,14 +30,3 @@ export class QuillEditorComponent {
     @Output() onContentChanged: EventEmitter<any> = new EventEmitter();
     @Output() onSelectionChanged: EventEmitter<any> = new EventEmitter();
 }
-
-@NgModule({
-    declarations: [
-        QuillEditorComponent
-    ],
-    exports: [
-        QuillEditorComponent
-    ]
-})
-export class QuillEditorModule { }
-

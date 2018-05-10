@@ -4,21 +4,33 @@ import { AdminComponent } from "./../../pages";
 import { AdminAuthGuard } from "./../../guards";
 import { AdminCommonModule } from "./admin.common.module";
 // import { SidebarComponent } from "./../../components";
-import { DashboardComponent, PostFormComponent, PostListComponent, PageListComponent, PageEditComponent } from "./../../components/admin";
-import { CommonModule } from '@angular/common';
+import { DashboardComponent, PostListComponent, PostFormComponent , PageListComponent, PageEditComponent } from "./../../components/admin";
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from "@angular/forms";
-import { QuillEditorModule } from 'ngx-quill-editor';
+import { QuillEditorModule } from '@app/../server-mocks/modules/ngx-quill-editor/quillEditor.module';
 import { platform } from "./../../../environments/platform";
 
+var declarations = [
+    // AdminComponent,
+    // SidebarComponent,
+    // DashboardComponent,
+    PageEditComponent,
+    PostFormComponent
+    // PostListComponent,
+]
+
+// var PostFormComponent;
+
+// if(isPlatformBrowser) {
+//     PostFormComponent = require("@app/components/admin/posts/post-form/post-form.component").PostFormComponent
+//     declarations.push(PostFormComponent);
+// } else {
+//     PostFormComponent = require("@app/components/admin/posts/post-form/post-form.component").PostFormComponent
+//     // PostFormComponent = require("@app/../server-mocks/components/post-form-mock/post-form.component").PostFormComponent
+//     declarations.push(PostFormComponent);
+// }
 @NgModule({
-    declarations: [
-        // AdminComponent,
-        // SidebarComponent,
-        // DashboardComponent,
-        PostFormComponent,
-        PageEditComponent
-        // PostListComponent,
-    ],
+    declarations: declarations,
     imports: [
         CommonModule,
         FormsModule,
