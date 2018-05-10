@@ -15,6 +15,7 @@
     "start": "ng serve --proxy-config config/ng/proxy.json",
     "start:server": "node dist/server",
     "build": "ng build",
+    "build:custom-server-app": "webpack --config config/webpack/webpack.app.config.js --env.server  --progress --colors",
     "build:server-app": "ng build --prod --app 1 --output-hashing=false",
     "build:server": "npm run webpack:server && ng build --prod --app 1 --output-hashing=false",
     "build:client-and-server-bundles": "ng build --prod && npm run build:server-app",
@@ -82,6 +83,7 @@
     "express": "^4.16.3",
     "http-server": "^0.11.1",
     "reflect-metadata": "^0.1.12",
+    "script-ext-html-webpack-plugin": "^2.0.1",
     "ts-loader": "^3.5.0",
     "typescript": "~2.8.3",
     "webpack-node-externals": "^1.7.2"
