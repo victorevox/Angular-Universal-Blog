@@ -14,6 +14,9 @@
       "@shared/*": [
         "../../shared/*"
       ],
+      "@server/*": [
+        "../../server/*"
+      ],
       "lazy_modules/admin/admin.browser": [
         "./app/lazy_modules/admin/server.browser"
       ],
@@ -24,15 +27,16 @@
   },
   "include": [
     "./**/*",
-    // "../../node_modules/ngx-quill-editor/quillEditor.component.ts",
-    // "../../node_modules/ngx-quill-editor/quillEditor.module.ts",
-    // "../../node_modules/ngx-quill-editor/index.ts"
+    "../../server/**/*.ts",
+    "../../node_modules/ngx-quill-editor/quillEditor.component.ts",
+    "../../node_modules/ngx-quill-editor/quillEditor.module.ts",
+    "../../node_modules/ngx-quill-editor/index.ts"
   ],
   "exclude": [
     "test.ts",
     "**/*.spec.ts"
   ],
   "angularCompilerOptions": {
-    "entryModule": "main.server#AppServerModule"
+    "entryModule": "app/app.server.module#AppServerModule"
   }
 }

@@ -48,7 +48,7 @@ module.exports = {
   // externals: [/node_modules/],
   output: {
     // Puts the output at the root of the dist folder
-    path: path.join(root, 'dist'),
+    path: path.join(root, 'dist/server'),
     filename: '[name].js',
     libraryTarget: 'commonjs',
   },

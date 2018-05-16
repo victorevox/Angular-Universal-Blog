@@ -22,6 +22,7 @@ import { api_routes } from "@server/routes/api.routes";
 import { ErrorMiddleware } from "@server/middlewares/express/error.middleware";
 import { connectDb } from '@server/config/db';
 import { PassportConfig } from "@server/config/passport";
+import { AppServerModule } from "@app/app.server.module";
 
 const DIST_FOLDER = join(process.cwd(), 'dist');
 
@@ -52,7 +53,14 @@ if (existsSync(resolve(DIST_FOLDER, 'browser/index.html'))) {
 }
 
 // * NOTE :: leave this as require() since this file is built Dynamically from webpack
-const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require('./server/main.bundle');
+// const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require('./app/main.bundle.js');
+// console.log(AppServerModuleNgFactory);
+console.log("..............");
+let a = require('./app/main.bundle.js');
+console.log(a);
+
+
+
 
 
 app.use(json()); // parse application/json
@@ -69,10 +77,10 @@ PassportConfig.config(app);
 
 // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
 app.engine('html', ngExpressEngine({
-  bootstrap: AppServerModuleNgFactory,
-  providers: [
-    provideModuleMap(LAZY_MODULE_MAP)
-  ]
+  bootstrap: AppServerModule,
+  // providers: [
+  //   provideModuleMap(LAZY_MODULE_MAP)
+  // ]
 }));
 
 app.set('view engine', 'html');
@@ -96,7 +104,7 @@ api_routes(app);
 
 // All regular routes use the Universal engine
 app.get('*', (req, res) => {
-  res.render('index', { req });
+  res.render(join(DIST_FOLDER, 'browser', 'index.html'), { req });
 });
 
 // ALl regular routes use the Universal engine

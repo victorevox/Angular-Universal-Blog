@@ -1,12 +1,24 @@
-import {NgModule} from '@angular/core';
+import {NgModule, ApplicationRef} from '@angular/core';
 import {ServerModule} from '@angular/platform-server';
 import {ModuleMapLoaderModule} from '@nguniversal/module-map-ngfactory-loader';
 
 import {AppModule} from './app.module';
 import {AppComponent} from './app.component';
+import { TransferState } from '@angular/platform-browser';
 
 // import { FormsModule } from "@angular/forms";
 // import { HttpModule } from "@angular/http";
+
+// export function onBootstrap(appRef: ApplicationRef, transferState: TransferState) {
+//   return () => {
+//     appRef.isStable
+//       .filter(stable => stable)
+//       .first()
+//       .subscribe(() => {
+//         transferState.inject();
+//       });
+//   };
+// }
 
 @NgModule({
   imports: [
