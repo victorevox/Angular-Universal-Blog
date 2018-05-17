@@ -9,7 +9,7 @@ import { config as dotEnvConfig } from "dotenv";
 //All serverside Related stuff
 import 'zone.js/dist/zone-node';
 import 'reflect-metadata';
-import { renderModuleFactory } from '@angular/platform-server';
+import { renderModuleFactory, platformServer } from '@angular/platform-server';
 import { enableProdMode } from '@angular/core';
 // Express Engine
 import { ngExpressEngine } from '@nguniversal/express-engine';
@@ -26,14 +26,16 @@ import { AppServerModule } from "@app/app.server.module";
 
 const DIST_FOLDER = join(process.cwd(), 'dist');
 
+console.log(join(__dirname, '/../../.env'));
+
 //Read env variables
-if (existsSync(join(__dirname, '/../.env'))) {
-  let envPath = join(__dirname, '/../.env');
+if (existsSync(join(__dirname, '/../../.env'))) {
+  let envPath = join(__dirname, '/../../.env');
   dotEnvConfig({ path: envPath });
-} else if (existsSync(join(__dirname, '/../.env.example'))) {
-  let envPath = join(__dirname, '/../.env.example');
+} else if (existsSync(join(__dirname, '/../../.env.example'))) {
+  let envPath = join(__dirname, '/../../.env.example');
   dotEnvConfig({ path: envPath });
-  console.log(join(__dirname, '/../.env.example'));
+  console.log(join(__dirname, '/../../.env.example'));
   console.log("Loaded example ENV");
 
 } else {
@@ -56,8 +58,8 @@ if (existsSync(resolve(DIST_FOLDER, 'browser/index.html'))) {
 // const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require('./app/main.bundle.js');
 // console.log(AppServerModuleNgFactory);
 console.log("..............");
-let a = require('./app/main.bundle.js');
-console.log(a);
+// let a = require('./app/main.bundle.js');
+// console.log(a);
 
 
 
@@ -84,7 +86,8 @@ app.engine('html', ngExpressEngine({
 }));
 
 app.set('view engine', 'html');
-app.set('views', join(DIST_FOLDER, 'browser'));
+// app.set('views', join(DIST_FOLDER, 'browser'));
+app.set('views', 'src');
 
 /* - Example Express Rest API endpoints -
   app.get('/api/**', (req, res) => { });

@@ -1,8 +1,9 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
 import { NgModule, Injector } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from "@angular/forms";
 import { HttpModule, XHRBackend, RequestOptions } from "@angular/http";
+import { HttpClientModule } from '@angular/common/http';
 import { JasperoAlertsModule, AlertsService } from "@jaspero/ng-alerts";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FileUploadModule } from 'ng2-file-upload';
@@ -24,7 +25,7 @@ import { CustomHttpService } from "./services";
     ...BASE_COMPONENTS
   ],
   imports: [
-    HttpModule,
+    HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
     FileUploadModule,

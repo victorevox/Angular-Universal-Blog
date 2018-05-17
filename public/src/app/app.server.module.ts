@@ -1,10 +1,11 @@
 import {NgModule, ApplicationRef} from '@angular/core';
-import {ServerModule} from '@angular/platform-server';
+import {ServerModule, ServerTransferStateModule} from '@angular/platform-server';
 import {ModuleMapLoaderModule} from '@nguniversal/module-map-ngfactory-loader';
 
 import {AppModule} from './app.module';
 import {AppComponent} from './app.component';
-import { TransferState } from '@angular/platform-browser';
+import { TransferState  } from '@angular/platform-browser';
+import { BrowserModule } from '@angular/platform-browser';
 
 // import { FormsModule } from "@angular/forms";
 // import { HttpModule } from "@angular/http";
@@ -24,9 +25,13 @@ import { TransferState } from '@angular/platform-browser';
   imports: [
     // The AppServerModule should import your AppModule followed
     // by the ServerModule from @angular/platform-server.
-    AppModule,
+    BrowserModule.withServerTransition({
+      appId: 'my-app'
+    }),
     ServerModule,
     ModuleMapLoaderModule,
+    ServerTransferStateModule,
+    AppModule,
     // HttpModule,
     // FormsModule,
   ],
