@@ -15,7 +15,8 @@ module.exports = function (options, webpackOptions) {
 
   const serverConfig = webpackMerge({}, commonPartial, serverPartial, {
     plugins: [
-      getAotPlugin('server', !!options.aot)
+      // getAotPlugin('server', !!options.aot)
+      getAotPlugin('server', false)
     ]
   });
 
