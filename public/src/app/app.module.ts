@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from "@angular/forms";
 import { HttpModule, XHRBackend, RequestOptions } from "@angular/http";
 import { HttpClientModule } from '@angular/common/http';
-import { JasperoAlertsModule, AlertsService } from "@jaspero/ng-alerts";
+// import { JasperoAlertsModule, AlertsService } from "@jaspero/ng-alerts";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FileUploadModule } from 'ng2-file-upload';
 import { SimpleNotificationsModule } from 'angular2-notifications';
@@ -25,11 +25,11 @@ import { CustomHttpService } from "./services";
     ...BASE_COMPONENTS
   ],
   imports: [
-    HttpClientModule,
+    HttpModule,
     FormsModule,
     BrowserAnimationsModule,
     FileUploadModule,
-    JasperoAlertsModule.forRoot(),
+    // JasperoAlertsModule.forRoot(),
     SimpleNotificationsModule.forRoot(),
     BrowserModule.withServerTransition({appId: 'my-app'}),
     RouterModule.forRoot(ROUTES)

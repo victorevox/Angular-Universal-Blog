@@ -1,12 +1,9 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../out-tsc/app",
     "baseUrl": "./",
     "module": "commonjs",
-    "types": [
-      "node"
-    ],
+    "sourceMap": true,
     "paths": {
       "@app/*": [
         "app/*"
@@ -16,12 +13,6 @@
       ],
       "@server/*": [
         "../../server/*"
-      ],
-      "lazy_modules/admin/admin.browser": [
-        "./app/lazy_modules/admin/server.browser"
-      ],
-      "ngx-quill-editor": [
-        "server-mocks/modules/ngx-quill-editor/quillEditor.module.ts"
       ]
     }
   },
@@ -37,6 +28,7 @@
     "**/*.spec.ts"
   ],
   "angularCompilerOptions": {
-    "entryModule": "app/app.server.module#AppServerModule"
+    "entryModule": "./app/app.server.module#AppServerModule",
+    // "genDir": "../../dist/server/ngfactory"
   }
 }

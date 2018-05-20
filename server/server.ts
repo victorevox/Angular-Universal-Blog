@@ -9,7 +9,8 @@ import { config as dotEnvConfig } from "dotenv";
 //All serverside Related stuff
 import 'zone.js/dist/zone-node';
 import 'reflect-metadata';
-import { renderModuleFactory, platformServer } from '@angular/platform-server';
+import 'rxjs/Rx';
+import { platformServer, renderModuleFactory } from '@angular/platform-server';
 import { enableProdMode } from '@angular/core';
 // Express Engine
 import { ngExpressEngine } from '@nguniversal/express-engine';

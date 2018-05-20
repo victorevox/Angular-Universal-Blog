@@ -1,7 +1,7 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { Http } from "@angular/http";
 import { Response } from '@angular/http';
-import { AlertsService } from '@jaspero/ng-alerts';
+import { AlertsService } from '@app/services/alerts.service';
 import { StorageService } from './storage.service';
 import { IUser, USER_ROLE, IAuthenticationEvent, ISignupCredentials, AUTH_EVENT_TYPES, ILoginCredentials, ILoginResponse } from "@shared/interfaces";
 import { NotificationsService } from 'angular2-notifications';

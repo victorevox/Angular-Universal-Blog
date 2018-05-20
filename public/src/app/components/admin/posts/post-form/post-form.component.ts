@@ -2,7 +2,7 @@ import { Component, OnInit, ComponentFactoryResolver, Injector, ViewChild, Eleme
 import { GlobalsService, CustomHttpService } from "@app/services";
 import { NgForm } from "@angular/forms"
 import { QuillEditorComponent } from "ngx-quill-editor/quillEditor.component";
-import { AlertsService } from '@jaspero/ng-alerts';
+import { AlertsService } from '@app/services/alerts.service';
 import { NotificationsService } from "angular2-notifications"
 import { Router, NavigationEnd, ActivatedRoute } from "@angular/router";
 import { IResourceListResponse, IPost } from '@shared/interfaces';

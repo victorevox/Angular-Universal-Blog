@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef, ChangeDete
 import { Router, ActivatedRoute } from "@angular/router";
 import { AuthenticationService } from "./../../services";
 import { NgForm } from "@angular/forms";
-import { AlertsService } from '@jaspero/ng-alerts';
+import { AlertsService } from '@app/services/alerts.service';
 import { NotificationsService } from 'angular2-notifications';
 
 enum AUTH_TYPES {

@@ -13,7 +13,10 @@ module.exports = {
   },
   module: {
     rules: [
-      { test: /\.ts$/, loader: '@ngtools/webpack',  },
+      {
+        test: /(?:\.ngfactory\.js|\.ngstyle\.js|\.ts)$/,
+        loader: '@ngtools/webpack'
+      },
       {
         test: /\.scss$/,
         use: ['raw-loader', 'sass-loader']

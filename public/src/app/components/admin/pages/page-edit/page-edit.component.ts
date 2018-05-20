@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@
 import { IPage, IResourceListResponse } from "@shared/interfaces"
 import { CustomHttpService } from "@app/services";
 import { Router, ActivatedRoute } from "@angular/router";
-import { AlertsService } from '@jaspero/ng-alerts';
+import { AlertsService } from '@app/services/alerts.service';
 import { NgForm, NgModel } from '@angular/forms';
 import { NotificationsService } from 'angular2-notifications';
 

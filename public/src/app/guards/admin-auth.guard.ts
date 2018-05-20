@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { CanActivate, Router } from "@angular/router";
 import { AuthenticationService } from "@app/services";
 import { USER_ROLE } from "@shared/interfaces";
-import { AlertsService } from "@jaspero/ng-alerts";
+import { AlertsService } from '@app/services/alerts.service';
 
 @Injectable()
 export class AdminAuthGuard implements CanActivate {

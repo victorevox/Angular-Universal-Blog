@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angula
 import { FileUploader } from 'ng2-file-upload';
 // import { AuthenticationService } from './../../../services';
 import { AuthenticationService } from "@app/services";
-import { AlertsService } from '@jaspero/ng-alerts';
+import { AlertsService } from '@app/services/alerts.service';
 import { IUser } from '@shared/interfaces/user.interface';
 import { NotificationsService } from 'angular2-notifications';
 
