@@ -14,4 +14,4 @@ export const ROUTES = [
     { path: 'profile', canActivate: [UserAuthGuard], loadChildren: './lazy_modules/profile.module#ProfileModule' },
     { path: 'admin', loadChildren: './lazy_modules/admin/admin.browser.module#AdminModule' },
     { path: '*', component: AuthComponent },
-];
+];  

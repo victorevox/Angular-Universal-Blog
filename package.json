@@ -18,7 +18,7 @@
     "build:app": "npm run build -- --prod --aot --output-hashing none",
     "build:custom-server-app": "node node_modules/.bin/webpack --config config/webpack/webpack.app.config.js --env.aot --env.server --progress --colors",
     "build:server-app": "node node_modules/.bin/webpack --config config/webpack/webpack.server-app.config.js --progress --colors",
-    "build:server": "npm run build:custom-server-app"
+    "build:server": "webpack --config config/webpack/webpack.server.config --progress"
   },
   "private": true,
   "dependencies": {
@@ -60,7 +60,7 @@
   },
   "devDependencies": {
     "@angular-devkit/core": "^0.6.0",
-    "@angular/cli": "1.7.3",
+    "@angular/cli": "1.7.4",
     "@angular/compiler-cli": "^5.0.0",
     "@angular/language-service": "^5.2.10",
     "@ngtools/webpack": "^1.10.2",

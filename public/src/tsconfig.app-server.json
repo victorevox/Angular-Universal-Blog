@@ -4,6 +4,12 @@
     "baseUrl": "./",
     "module": "commonjs",
     "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "traceResolution": true,
+    "diagnostics": true,
     "paths": {
       "@app/*": [
         "app/*"
@@ -13,6 +19,9 @@
       ],
       "@server/*": [
         "../../server/*"
+      ],
+      "lazy_modules/*": [
+        "./app/lazy_modules/*"
       ]
     }
   },

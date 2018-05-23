@@ -56,7 +56,7 @@ if (existsSync(resolve(DIST_FOLDER, 'browser/index.html'))) {
 }
 
 // * NOTE :: leave this as require() since this file is built Dynamically from webpack
-// const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require('./app/main.bundle.js');
+const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require('./main.bundle.js');
 // console.log(AppServerModuleNgFactory);
 console.log("..............");
 // let a = require('./app/main.bundle.js');
@@ -80,10 +80,10 @@ PassportConfig.config(app);
 
 // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
 app.engine('html', ngExpressEngine({
-  bootstrap: AppServerModule,
-  // providers: [
-  //   provideModuleMap(LAZY_MODULE_MAP)
-  // ]
+  bootstrap: AppServerModuleNgFactory,
+  providers: [
+    provideModuleMap(LAZY_MODULE_MAP)
+  ]
 }));
 
 app.set('view engine', 'html');

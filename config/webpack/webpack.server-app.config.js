@@ -44,18 +44,18 @@ module.exports = {
     },
     plugins: [
         new webpack.NormalModuleReplacementPlugin(
-            /ngx-quill-editor$/,
-            root('./public/src/server-mocks/modules/ngx-quill-editor/quillEditor.module.ts')
-        ),
-        new webpack.NormalModuleReplacementPlugin(
             /ngx-quill-editor\/quillEditor.component/,
             root('./public/src/server-mocks/modules/ngx-quill-editor/quillEditor.component.ts')
         ),
         new webpack.NormalModuleReplacementPlugin(
-            /jaspero\/ng-alerts/, 
-            function (resource) {
-                resource.request = root('./public/src/server-mocks/modules/@jaspero/ng-alerts/index.ts');
-            }
-        )
+            /ngx-quill-editor$/,
+            root('./public/src/server-mocks/modules/ngx-quill-editor/quillEditor.module.ts')
+        ),
+        // new webpack.NormalModuleReplacementPlugin(
+        //     /jaspero\/ng-alerts/, 
+        //     function (resource) {
+        //         resource.request = root('./public/src/server-mocks/modules/@jaspero/ng-alerts/index.ts');
+        //     }
+        // )
     ]
 };

@@ -15,10 +15,21 @@ const tsconfigs = {
  * @returns {AotPlugin} Configuration of AotPlugin
  */
 function getAotPlugin(platform, aot) {
-  return new AngularCompilerPlugin({
+  let options = {
     tsConfigPath: tsconfigs[platform],
-    skipCodeGeneration: !aot
-  });
+    skipCodeGeneration: !aot,
+    sourceMap: true,
+  };
+  if(platform === "server") {
+    console.log("Serverrrrr");
+    options.platform = 1;
+    options.compilerOptions = {}
+    console.log(options);
+    // options.mainPath = "main.server.ts";
+    options.mainPath = "app/app.server.module.ts";
+    
+  }
+  return new AngularCompilerPlugin(options);
 }
 
 module.exports = {
