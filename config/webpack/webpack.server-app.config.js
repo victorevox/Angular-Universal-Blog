@@ -22,13 +22,15 @@ module.exports = {
     //     // This is an example of Static prerendering (generative)
     //     // prerender: './prerender.ts'
     // },
-    entry: root("server/server.ts"),
+    // entry: root("server/server.ts"),
+    entry: root("public/src/main.server.ts"),
     target: 'node',
     node: {
         __dirname: false,
         __filename: false,
     },
     externals: [
+        /main\.bundle/,
         nodeExternals({
             whitelist: [/@angular/, /@ng/, '@server'],
         })
@@ -37,7 +39,7 @@ module.exports = {
     output: {
         // Puts the output at the root of the dist folder
         path: root('dist/server'),
-        filename: 'server.js',
+        filename: 'main.bundle.js',
         libraryTarget: 'commonjs',
     },
     plugins: [

@@ -15,7 +15,10 @@ module.exports = {
     rules: [
       {
         test: /(?:\.ngfactory\.js|\.ngstyle\.js|\.ts)$/,
-        loader: '@ngtools/webpack'
+        loader: '@ngtools/webpack',
+        options: {
+          debug: true
+        }
       },
       {
         test: /\.scss$/,
