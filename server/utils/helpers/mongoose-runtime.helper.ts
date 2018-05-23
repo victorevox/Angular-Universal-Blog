@@ -1,7 +1,7 @@
 import { Connection, SchemaOptions, Schema, Model } from "mongoose";
 import { MODEL_SCHEMAS } from "@server/config/mongoose-schema-loader";
 import { merge } from "lodash";
-import { SecurityMiddleware, TenantPopulationMiddleware } from "@server/middlewares/mongoose";
+import { SecurityMiddleware, TenantPopulationMiddleware, CrudMiddleware } from "@server/middlewares/mongoose";
 
 export const compileModelsForConnection = function (connection: Connection, options: SchemaOptions) {
     for (const schemaName in MODEL_SCHEMAS) {
@@ -38,6 +38,7 @@ export const compileModelsForConnection = function (connection: Connection, opti
     }
 
     function addPlugins(schema: Schema) {
+        schema.plugin(CrudMiddleware.init);
         schema.plugin(TenantPopulationMiddleware.init);
         schema.plugin(SecurityMiddleware.init);
     }

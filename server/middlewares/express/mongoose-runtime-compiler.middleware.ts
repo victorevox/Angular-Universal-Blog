@@ -50,7 +50,7 @@ export class MongooseCustomMiddleware {
                 if (schemaOrModel instanceof Schema) {
                     name = schemaOrModel.options.name || options.name;
                     schema = schemaOrModel;
-                } else if (schemaOrModel() instanceof Model) {
+                } else if ( schemaOrModel instanceof Model) {
                     name = schemaOrModel.modelName;
                     schema = schemaOrModel.schema;
                 } else if (isString(schemaOrModel)) {

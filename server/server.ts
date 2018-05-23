@@ -27,6 +27,17 @@ import { AppServerModule } from "@app/app.server.module";
 
 const DIST_FOLDER = join(process.cwd(), 'dist');
 
+import { createWindow, createDOMImplementation } from "domino";
+
+let window = createWindow();
+global["window"] = window;
+global["document"] = window.document;
+global["DOMTokenList"] = class DOMTokenList{
+  public static toggle(){};
+};
+global["Node"] = class Node {};
+global["navigator"] = window.navigator;
+
 console.log(join(__dirname, '/../../.env'));
 
 //Read env variables

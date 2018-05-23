@@ -43,19 +43,54 @@ module.exports = {
         libraryTarget: 'commonjs',
     },
     plugins: [
-        new webpack.NormalModuleReplacementPlugin(
-            /ngx-quill-editor\/quillEditor.component/,
-            root('./public/src/server-mocks/modules/ngx-quill-editor/quillEditor.component.ts')
-        ),
-        new webpack.NormalModuleReplacementPlugin(
-            /ngx-quill-editor$/,
-            root('./public/src/server-mocks/modules/ngx-quill-editor/quillEditor.module.ts')
-        ),
         // new webpack.NormalModuleReplacementPlugin(
-        //     /jaspero\/ng-alerts/, 
+        //     /ngx-quill-editor\/quillEditor.component(\.ts|)$/,
+        //     function (resource) {
+        //         console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
+        //         console.log(resource.request);
+        //         console.log("-------------------------------------------\n");
+        //         resource.request = root('./public/src/server-mocks/modules/ngx-quill-editor/quillEditor.component.ts');
+        //         console.log(resource.request);
+        //         console.log("-------------------------------------------\n");
+        //         console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
+        //     }
+        // ),
+        // new webpack.ContextReplacementPlugin(/.\/post-form/, (context) => {
+        //     console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
+        //     console.log(resource.request);
+        //     console.log("===============================================\n");
+        //     resource.request = root('./public/src/server-mocks/components/post-form-mock/post-form.component.ts');
+        //     console.log(resource.request);
+        //     console.log("===============================================\n");
+        //     console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
+        // }),
+        // new webpack.NormalModuleReplacementPlugin(
+        //     /.\/post-form\/post-form.component(\.ts|)$/,
+        //     function (resource) {
+        //         console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
+        //         console.log(resource.request);
+        //         console.log("-------------------------------------------\n");
+        //         resource.request = root('./public/src/server-mocks/components/post-form-mock/post-form.component.ts');
+        //         console.log(resource.request);
+        //         console.log("-------------------------------------------\n");
+        //         console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
+        //     }
+        // ),
+        // new webpack.NormalModuleReplacementPlugin(
+        //     /ngx-quill-editor$/,
+        //     root('./public/src/server-mocks/modules/ngx-quill-editor/quillEditor.module.ts')
+        // ),
+        // new webpack.NormalModuleReplacementPlugin(
+        //     /jaspero\/ng-alerts/,
         //     function (resource) {
         //         resource.request = root('./public/src/server-mocks/modules/@jaspero/ng-alerts/index.ts');
         //     }
         // )
-    ]
+    ],
+    resolve: {
+        alias: {
+            // "ngx-quill-editor": root('./public/src/server-mocks/modules/ngx-quill-editor'),
+            // "ngx-quill-editor/quillEditor.component": root('./public/src/server-mocks/modules/ngx-quill-editor/quillEditor.module.ts'),
+        },
+    }
 };

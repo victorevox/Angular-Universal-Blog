@@ -20,6 +20,11 @@ export class CustomHttpService extends Http {
         return super.put(url, body, this.setHeaders(requestOptions));
     }
 
+    get(url: string, requestOptions?: RequestOptionsArgs) {
+        return super.get(url, this.setHeaders(requestOptions));
+    }
+
+
     setHeaders(options: RequestOptionsArgs) {
         if (!options) {
             // let's make option object
