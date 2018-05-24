@@ -22,7 +22,7 @@ function getAotPlugin(platform, aot) {
   };
   if(platform === "server") {
     console.log("Serverrrrr");
-    options.platform = 1;
+    // options.platform = 1;
     options.compilerOptions = {}
     console.log(options);
     // options.mainPath = "main.server.ts";

@@ -5,7 +5,9 @@ const webpack = require('webpack');
 const nodeExternals = require('webpack-node-externals');
 const { AngularCompilerPlugin } = require('@ngtools/webpack');
 const { AotPlugin } = require('@ngtools/webpack');
-
+const { NamedLazyChunksWebpackPlugin, BaseHrefWebpackPlugin, PostcssCliResources } = require('@angular/cli/plugins/webpack');
+const { CommonsChunkPlugin } = require('webpack').optimize;
+const { NoEmitOnErrorsPlugin, SourceMapDevToolPlugin, NamedModulesPlugin } = require('webpack');
 
 
 // console.log(`Server tsconfig is: ${root('public/src/tsconfig.app-server.json')}`);
@@ -40,9 +42,20 @@ module.exports = {
         // Puts the output at the root of the dist folder
         path: root('dist/server'),
         filename: 'main.bundle.js',
-        libraryTarget: 'commonjs',
+        "chunkFilename": "[id].chunk.js",
+        "crossOriginLoading": false
+        // libraryTarget: 'commonjs',
     },
     plugins: [
+        new NamedLazyChunksWebpackPlugin(),
+        new CommonsChunkPlugin({
+            "name": [
+                "main"
+            ],
+            "minChunks": 2,
+            "async": "common"
+        }),
+        new NamedModulesPlugin({})
         // new webpack.NormalModuleReplacementPlugin(
         //     /ngx-quill-editor\/quillEditor.component(\.ts|)$/,
         //     function (resource) {
