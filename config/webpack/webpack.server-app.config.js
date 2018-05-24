@@ -8,6 +8,7 @@ const { AotPlugin } = require('@ngtools/webpack');
 const { NamedLazyChunksWebpackPlugin, BaseHrefWebpackPlugin, PostcssCliResources } = require('@angular/cli/plugins/webpack');
 const { CommonsChunkPlugin } = require('webpack').optimize;
 const { NoEmitOnErrorsPlugin, SourceMapDevToolPlugin, NamedModulesPlugin } = require('webpack');
+const CircularDependencyPlugin = require('circular-dependency-plugin');
 
 
 // console.log(`Server tsconfig is: ${root('public/src/tsconfig.app-server.json')}`);
@@ -42,9 +43,9 @@ module.exports = {
         // Puts the output at the root of the dist folder
         path: root('dist/server'),
         filename: 'main.bundle.js',
-        "chunkFilename": "[id].chunk.js",
-        "crossOriginLoading": false
-        // libraryTarget: 'commonjs',
+        // "chunkFilename": "[id].chunk.js",
+        // "crossOriginLoading": false,
+        libraryTarget: 'commonjs',
     },
     plugins: [
         new NamedLazyChunksWebpackPlugin(),
@@ -101,6 +102,7 @@ module.exports = {
         // )
     ],
     resolve: {
+        symlinks: true,
         alias: {
             // "ngx-quill-editor": root('./public/src/server-mocks/modules/ngx-quill-editor'),
             // "ngx-quill-editor/quillEditor.component": root('./public/src/server-mocks/modules/ngx-quill-editor/quillEditor.module.ts'),
