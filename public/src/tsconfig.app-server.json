@@ -3,8 +3,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "module": "commonjs",
-    "sourceMap": true,
-    "declaration": false,
+    "sourceMap": false,
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -27,7 +26,6 @@
   },
   "include": [
     "./**/*",
-    "../../server/**/*.ts",
     "../../node_modules/ngx-quill-editor/quillEditor.component.ts",
     "../../node_modules/ngx-quill-editor/quillEditor.module.ts",
     "../../node_modules/ngx-quill-editor/index.ts"
@@ -35,8 +33,10 @@
   "exclude": [
     "test.ts",
     "**/*.spec.ts",
+    "server-mocks"
   ],
   "angularCompilerOptions": {
-    "entryModule": "./app/app.server.module#AppServerModule",
+    "platform": 1,
+    "entryModule": "./app/app.server.module#AppServerModule"
   }
 }

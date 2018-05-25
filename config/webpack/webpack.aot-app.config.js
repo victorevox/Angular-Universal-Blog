@@ -18,16 +18,12 @@ function getAotPlugin(platform, aot) {
   let options = {
     tsConfigPath: tsconfigs[platform],
     skipCodeGeneration: !aot,
-    sourceMap: true,
+    // sourceMap: false,
   };
   if(platform === "server") {
-    console.log("Serverrrrr");
     options.platform = 1;
-    options.compilerOptions = {}
-    console.log(options);
-    // options.mainPath = "main.server.ts";
-    options.mainPath = "app/app.server.module.ts";
-    
+    // options.mainPath = "app/app.server.module.ts";
+    // options.entryModule = root('./public/src/app/app.server.module.ts#AppServerModule');
   }
   return new AngularCompilerPlugin(options);
 }

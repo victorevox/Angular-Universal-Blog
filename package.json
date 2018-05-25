@@ -59,10 +59,10 @@
   },
   "devDependencies": {
     "@angular-devkit/core": "^0.6.0",
-    "@angular/cli": "1.7.4",
+    "@angular/cli": "1.6.0",
     "@angular/compiler-cli": "^5.0.0",
     "@angular/language-service": "^5.2.10",
-    "@ngtools/webpack": "^1.10.2",
+    "@ngtools/webpack": "1.9.0",
     "@types/formidable": "^1.0.31",
     "@types/jsonwebtoken": "^7.2.6",
     "@types/lodash": "^4.14.107",

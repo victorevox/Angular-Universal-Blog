@@ -3,7 +3,7 @@
   "compilerOptions": {
     "moduleResolution": "node",
     "module": "es2015",
-    "target": "es5",
+    "target": "esnext",
     "noImplicitAny": false,
     "sourceMap": false,
     "experimentalDecorators": true,

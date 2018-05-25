@@ -26,7 +26,7 @@ module.exports = {
     //     // prerender: './prerender.ts'
     // },
     // entry: root("server/server.ts"),
-    entry: root("public/src/main.server.ts"),
+    entry: root("public/src/app/app.server.module.ts"),
     target: 'node',
     node: {
         __dirname: false,
@@ -45,7 +45,7 @@ module.exports = {
         filename: 'main.bundle.js',
         // "chunkFilename": "[id].chunk.js",
         // "crossOriginLoading": false,
-        libraryTarget: 'commonjs',
+        // libraryTarget: 'commonjs',
     },
     plugins: [
         new NamedLazyChunksWebpackPlugin(),
@@ -103,9 +103,5 @@ module.exports = {
     ],
     resolve: {
         symlinks: true,
-        alias: {
-            // "ngx-quill-editor": root('./public/src/server-mocks/modules/ngx-quill-editor'),
-            // "ngx-quill-editor/quillEditor.component": root('./public/src/server-mocks/modules/ngx-quill-editor/quillEditor.module.ts'),
-        },
     }
 };
