@@ -9,10 +9,13 @@ const { NamedLazyChunksWebpackPlugin, BaseHrefWebpackPlugin, PostcssCliResources
 const { CommonsChunkPlugin } = require('webpack').optimize;
 const { NoEmitOnErrorsPlugin, SourceMapDevToolPlugin, NamedModulesPlugin } = require('webpack');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
+const fs = require("fs");
 
 
 // console.log(`Server tsconfig is: ${root('public/src/tsconfig.app-server.json')}`);
-
+const nodeModules = root("./node_modules");
+const realNodeModules = fs.realpathSync(nodeModules);
+const genDirNodeModules = path.join(root(""), 'public/src', '$$_gendir', 'node_modules');
 /**
  * This is a server config which should be merged on top of common config
  */
@@ -26,7 +29,10 @@ module.exports = {
     //     // prerender: './prerender.ts'
     // },
     // entry: root("server/server.ts"),
-    entry: root("public/src/app/app.server.module.ts"),
+    entry: [
+        // root("public/src/app/app.server.module.ts")
+        root("public/src/main.server.ts")
+    ],
     target: 'node',
     node: {
         __dirname: false,
@@ -43,12 +49,32 @@ module.exports = {
         // Puts the output at the root of the dist folder
         path: root('dist/server'),
         filename: 'main.bundle.js',
-        // "chunkFilename": "[id].chunk.js",
-        // "crossOriginLoading": false,
+        "chunkFilename": "[id].chunk.js",
+        "crossOriginLoading": false,
         // libraryTarget: 'commonjs',
     },
     plugins: [
-        new NamedLazyChunksWebpackPlugin(),
+        // new NamedLazyChunksWebpackPlugin(),
+        new SourceMapDevToolPlugin({
+            "filename": "[file].map[query]",
+            "moduleFilenameTemplate": "[resource-path]",
+            "fallbackModuleFilenameTemplate": "[resource-path]?[hash]",
+            "sourceRoot": "webpack:///"
+          }),
+        //   new CommonsChunkPlugin({
+        //     "name": [
+        //       "vendor"
+        //     ],
+        //     "minChunks": (module) => {
+        //               return module.resource
+        //                   && (module.resource.startsWith(nodeModules)
+        //                       || module.resource.startsWith(genDirNodeModules)
+        //                       || module.resource.startsWith(realNodeModules));
+        //           },
+        //     "chunks": [
+        //       "main"
+        //     ]
+        //   }),
         new CommonsChunkPlugin({
             "name": [
                 "main"
@@ -57,6 +83,10 @@ module.exports = {
             "async": "common"
         }),
         new NamedModulesPlugin({})
+
+
+
+
         // new webpack.NormalModuleReplacementPlugin(
         //     /ngx-quill-editor\/quillEditor.component(\.ts|)$/,
         //     function (resource) {
@@ -102,6 +132,6 @@ module.exports = {
         // )
     ],
     resolve: {
-        symlinks: true,
+        // symlinks: true,
     }
 };

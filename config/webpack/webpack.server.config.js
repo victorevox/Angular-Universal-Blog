@@ -58,9 +58,6 @@ module.exports = {
       {
         test: /\.ts$/,
         loader: 'ts-loader',
-        options: {
-          configFile: path.join(root, "server/tsconfig.server.json")
-        }
       }
     ]
   },
@@ -98,12 +95,6 @@ module.exports = {
         protocol: 'https',
         host: `localhost`,
       })
-    }),
-    new webpack.NormalModuleReplacementPlugin(
-      /quill.js/,
-      path.resolve(root, 'src/server-mocks/empty.js')
-      // or if you need to make some type of specific mock (copy/pasting) and editing
-      // path.resolve(root, 'src/server-mocks/primeng.js')
-    ),
+    })
   ]
 }

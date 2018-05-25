@@ -22,7 +22,7 @@ function getAotPlugin(platform, aot) {
   };
   if(platform === "server") {
     options.platform = 1;
-    // options.mainPath = "app/app.server.module.ts";
+    options.mainPath = "main.server.ts";
     // options.entryModule = root('./public/src/app/app.server.module.ts#AppServerModule');
   }
   return new AngularCompilerPlugin(options);

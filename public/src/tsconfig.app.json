@@ -3,7 +3,16 @@
   "compilerOptions": {
     "outDir": "../../out-tsc/app",
     "baseUrl": "./",
+    "target": "esnext",
     "module": "commonjs",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "noEmit": false,
+    "sourceMap": false,
+    "lib": [
+      "es2016",
+      "dom"
+    ],
     "types": [
       "node"
     ],
