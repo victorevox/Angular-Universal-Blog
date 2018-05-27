@@ -14,9 +14,6 @@ import { ServerTransferStateModule } from '../modules/transfer-state/server-tran
 import { TransferState } from '../modules/transfer-state/transfer-state';
 
 
-// import { FormsModule } from "@angular/forms";
-// import { HttpModule } from "@angular/http";
-
 export function onBootstrap(appRef: ApplicationRef, transferState: TransferState) {
   return () => {
     appRef.isStable

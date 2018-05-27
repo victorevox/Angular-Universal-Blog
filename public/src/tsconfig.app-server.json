@@ -14,7 +14,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "noEmit": false,
-    "traceResolution": false,
+    "traceResolution": true,
     "diagnostics": true,
     "paths": {
       "@app/*": [
@@ -44,6 +44,7 @@
   ],
   "angularCompilerOptions": {
     "platform": 1,
-    "entryModule": "./app/app.server.module#AppServerModule"
+    "entryModule": "./app/app.server.module#AppServerModule",
+    "preserveWhitespaces": false
   }
 }

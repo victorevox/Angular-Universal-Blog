@@ -16,7 +16,8 @@ import { ROUTES } from "./app.routing";
 import { BASE_SERVICES } from "./services";
 import { GUARDS } from "./guards";
 
-import { CustomHttpService } from "./services";
+import { HttpClient, HttpResponse } from "@angular/common/http";
+import { HttpInterceptors } from '@app/http-interceptors';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,7 @@ import { CustomHttpService } from "./services";
     ...BASE_COMPONENTS
   ],
   imports: [
-    HttpModule,
+    HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
     FileUploadModule,
@@ -35,18 +36,19 @@ import { CustomHttpService } from "./services";
     RouterModule.forRoot(ROUTES)
   ],
   providers: [
+    // HttpInterceptors,
     ...BASE_SERVICES,
     ...GUARDS,
-    {
-      provide: CustomHttpService,
-      useFactory: customHttp,
-      deps: [XHRBackend, RequestOptions, Injector /* AuthService */],
-    }
+    // {
+    //   provide: CustomHttpService,
+    //   useFactory: customHttp,
+    //   deps: [XHRBackend, RequestOptions, Injector /* AuthService */],
+    // }
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
 
-export function customHttp(backend: XHRBackend, options: RequestOptions, injector: Injector/* authService: AuthService */) {
-  return new CustomHttpService(backend, options, injector/* authService */);
-}
+// export function customHttp(backend: XHRBackend, options: RequestOptions, injector: Injector/* authService: AuthService */) {
+//   return new CustomHttpService(backend, options, injector/* authService */);
+// }

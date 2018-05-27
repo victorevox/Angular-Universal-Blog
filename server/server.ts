@@ -66,14 +66,11 @@ if (existsSync(resolve(DIST_FOLDER, 'browser/index.html'))) {
 }
 
 // * NOTE :: leave this as require() since this file is built Dynamically from webpack
-const { AppServerModuleNgFactory, LAZY_MODULE_MAP, ServerModule } = require('./main.bundle.js');
+const { AppServerModuleNgFactory, LAZY_MODULE_MAP, ServerModule } = require('./main.js');
 // console.log(AppServerModuleNgFactory);
 console.log("..............");
 // let a = require('./app/main.bundle.js');
 // console.log(a);
-
-
-
 
 
 app.use(json()); // parse application/json

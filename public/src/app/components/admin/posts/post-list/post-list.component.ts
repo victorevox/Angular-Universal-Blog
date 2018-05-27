@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CustomHttpService } from "@app/services";
+import { HttpClient, HttpResponse } from "@angular/common/http";
 import { IPost, IResourceListResponse } from '@shared/interfaces';
 
 @Component({
@@ -17,10 +17,10 @@ export class PostListComponent implements OnInit {
     { path: "createdAt", label: "Published On" }
   ]
 
-  constructor(private _router: Router, private _http: CustomHttpService) { 
-    this._http.get('/api/post').subscribe(response => {
+  constructor(private _router: Router, private _http: HttpClient) { 
+    this._http.get('/api/post').subscribe((response: IResourceListResponse) => {
       try {
-        let data: IResourceListResponse = <IResourceListResponse>response.json()
+        let data = response
         this.posts = data.documents;
         console.log(this.posts);
       } catch (error) {

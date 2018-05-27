@@ -1,11 +1,12 @@
 import { Component, OnInit, ComponentFactoryResolver, Injector, ViewChild, ElementRef, Renderer2, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { GlobalsService, CustomHttpService } from "@app/services";
+import { HttpClient, HttpResponse } from "@angular/common/http";
 import { NgForm } from "@angular/forms"
 import { QuillEditorComponent } from "ngx-quill-editor/quillEditor.component";
 import { AlertsService } from '@app/services/alerts.service';
 import { NotificationsService } from "angular2-notifications"
 import { Router, NavigationEnd, ActivatedRoute } from "@angular/router";
 import { IResourceListResponse, IPost } from '@shared/interfaces';
+import { GlobalsService } from '@app/services';
 
 @Component({
   selector: 'app-post-form',
@@ -33,16 +34,16 @@ export class PostFormComponent implements OnInit {
   public formType: FORM_TYPES = FORM_TYPES.CREATE;
   public postToEdit: string = null;
 
-  constructor(private _globals: GlobalsService, private _router: Router, private _notifications: NotificationsService, private _route: ActivatedRoute, private _factory: ComponentFactoryResolver, private _injector: Injector, private _renderer: Renderer2, private _alerts: AlertsService, private _http: CustomHttpService, private _cDr: ChangeDetectorRef) {
+  constructor(private _globals: GlobalsService, private _router: Router, private _notifications: NotificationsService, private _route: ActivatedRoute, private _factory: ComponentFactoryResolver, private _injector: Injector, private _renderer: Renderer2, private _alerts: AlertsService, private _http: HttpClient, private _cDr: ChangeDetectorRef) {
     this._router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         if (/posts\/(.*)\/edit/.test(this._router.routerState.snapshot.url)) {
           console.log("Youre editing");
           if (this.postToEdit) {
             this.formType = FORM_TYPES.EDIT;
-            this._http.get(`api/post/${this.postToEdit}`).subscribe(response => {
+            this._http.get(`api/post/${this.postToEdit}`).subscribe((response: IResourceListResponse) => {
               try {
-                let data: IResourceListResponse = <IResourceListResponse>response.json();
+                let data = response;
                 if (data) {
                   let post = data.documents;
                   post = post instanceof Array ? post[0] : post instanceof Object ? post : null;

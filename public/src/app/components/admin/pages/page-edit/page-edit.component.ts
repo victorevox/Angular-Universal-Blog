@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { IPage, IResourceListResponse } from "@shared/interfaces"
-import { CustomHttpService } from "@app/services";
+import { HttpClient, HttpResponse } from "@angular/common/http";
 import { Router, ActivatedRoute } from "@angular/router";
 import { AlertsService } from '@app/services/alerts.service';
 import { NgForm, NgModel } from '@angular/forms';
@@ -19,12 +19,12 @@ export class PageEditComponent implements OnInit {
   public editor;
   public pageContent: string = '';
 
-  constructor(private _http: CustomHttpService, private _cDr: ChangeDetectorRef, private _router: Router, private _notifications: NotificationsService, private _route: ActivatedRoute, private _alerts: AlertsService) {
+  constructor(private _http: HttpClient, private _cDr: ChangeDetectorRef, private _router: Router, private _notifications: NotificationsService, private _route: ActivatedRoute, private _alerts: AlertsService) {
     this._route.params.subscribe(params => {
       if (params && params.name) {
         let name = params.name;
-        this._http.get(`/api/page?filter[where][name]=${name}`).subscribe(response => {
-          let data: IResourceListResponse = <IResourceListResponse>response.json();
+        this._http.get(`/api/page?filter[where][name]=${name}`).subscribe((response: IResourceListResponse) => {
+          let data = response;
           if (data) {
             let page = data.documents;
             page = page instanceof Array ? page[0] : page instanceof Object ? page : null;
@@ -54,9 +54,9 @@ export class PageEditComponent implements OnInit {
     if (!form.valid) {
       return this._alerts.create("error", "Veryfy all required fields", "Invalid")
     }
-    this._http.put(`/api/page/${this.page._id}`, form.value).subscribe(response => {
+    this._http.put(`/api/page/${this.page._id}`, form.value).subscribe((response: IResourceListResponse) => {
       console.log(response);
-      let data: IResourceListResponse = <IResourceListResponse>response.json();
+      let data = response;
       if (data) {
         this._cDr.markForCheck();
       } else {

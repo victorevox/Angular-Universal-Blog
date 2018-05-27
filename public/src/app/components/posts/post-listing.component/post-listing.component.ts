@@ -1,8 +1,9 @@
 import { NgModule, Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core'
 import { Router, NavigationEnd } from "@angular/router";
-import { AuthenticationService, CustomHttpService } from '@app/services';
+import { HttpClient, HttpResponse } from "@angular/common/http";
 import { IPost, IResourceListResponse, IAuthenticationEvent } from "@shared/interfaces";
 import { NavigableLink } from "@app/interfaces";
+import { AuthenticationService } from '@app/services';
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -14,10 +15,10 @@ export class PostListingComponent {
     public posts: Array<IPost> = [];
 
 
-    constructor(private _router: Router, private _authService: AuthenticationService, private _http: CustomHttpService, private _chandDetectorRef: ChangeDetectorRef) {
-        this._http.get('/api/post').subscribe(response => {
+    constructor(private _router: Router, private _authService: AuthenticationService, private _http: HttpClient, private _chandDetectorRef: ChangeDetectorRef) {
+        this._http.get('/api/post').subscribe((response: IResourceListResponse) => {
             try {
-                let data: IResourceListResponse = <IResourceListResponse>response.json()
+                let data = response
                 this.posts = data.documents;
                 this._chandDetectorRef.markForCheck();                
                 console.log(this.posts);

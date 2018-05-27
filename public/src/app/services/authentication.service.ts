@@ -1,6 +1,5 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { Http } from "@angular/http";
-import { Response } from '@angular/http';
+import { HttpClient, HttpResponse } from "@angular/common/http";
 import { AlertsService } from '@app/services/alerts.service';
 import { StorageService } from './storage.service';
 import { IUser, USER_ROLE, IAuthenticationEvent, ISignupCredentials, AUTH_EVENT_TYPES, ILoginCredentials, ILoginResponse } from "@shared/interfaces";
@@ -13,14 +12,14 @@ export class AuthenticationService {
   private token_name = "access-token";
   public events: EventEmitter<IAuthenticationEvent> = new EventEmitter();
 
-  constructor(private http: Http, private _alert: AlertsService, private _location: Location, private _storageService: StorageService, private _notifications: NotificationsService) {
+  constructor(private http: HttpClient, private _alert: AlertsService, private _location: Location, private _storageService: StorageService, private _notifications: NotificationsService) {
 
   }
 
   signupByCredentials(credentials: ISignupCredentials): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.http.post("/api/authentication/register", credentials).subscribe((response: Response) => {
-        console.log(response.text());
+      this.http.post("/api/authentication/register", credentials).subscribe((response: HttpResponse<any>) => {
+        console.log(response);
         this.emit(AUTH_EVENT_TYPES.SIGNUP)
         this._notifications.success("Great!", "You've been registered successfuly")
         resolve();
@@ -34,10 +33,9 @@ export class AuthenticationService {
   loginByCredentials(credentials: ILoginCredentials): Promise<void> {
     return new Promise((resolve, reject) => {
       console.log("Login by credentials");
-      this.http.post("/api/authentication/login", credentials).subscribe((response: Response) => {
+      this.http.post("/api/authentication/login", credentials).subscribe((response: ILoginResponse) => {
         try {
-          let body = <ILoginResponse>response.json();
-          let token = body.token;
+          let token = response.token;
           this.saveToken(token);
           console.log(token)
           this.emit(AUTH_EVENT_TYPES.LOGIN);
@@ -45,7 +43,7 @@ export class AuthenticationService {
         } catch (error) {
           reject();
           this._alert.create("error", "Something went wrong", "Error");
-          console.log(response.text());
+          console.log(response);
         }
       }, err => {
         reject()
@@ -103,13 +101,13 @@ export class AuthenticationService {
     return user;
   }
 
-  handleError = (err: Error | Response) => {
+  handleError = (err: Error | HttpResponse<any>) => {
     if (err instanceof Error) {
       console.log(err);
       this._alert.create("error", err.message, "Error");
-    } else if (err instanceof Response) {
+    } else if (err instanceof HttpResponse) {
       try {
-        let error = err.json();
+        let error = err.body();
         console.log(error)
         this._alert.create("error", error.message ? error.message : error, "Error");
       } catch (_err) {

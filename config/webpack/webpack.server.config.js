@@ -41,6 +41,7 @@ module.exports = {
     //   callback();
     // }
     /main\.bundle/,
+    /main\.js/,
     nodeExternals({
       whitelist: ['@server'],
     })
