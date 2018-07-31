@@ -1,0 +1,28 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch App Server",
+            "program": "${workspaceFolder}/server/server.ts",
+            "outFiles": [
+                "${workspaceFolder}/dist/server/**/*.js",
+                // "${workspaceFolder}/dist/server/**/*.map"
+                // "${workspaceFolder}/dist/server/server.js"
+            ],
+            // "program": "${workspaceFolder}/dist/server/server.js",
+            "preLaunchTask": "build:server",
+            "sourceMaps": true,
+            "stopOnEntry": true,
+            "console": "internalConsole",
+            // "webRoot": "${workspaceRoot}",
+            // "sourceMapPathOverrides": {
+            //     "webpack:///*": "/*"
+            // },
+        }
+    ]
+}
