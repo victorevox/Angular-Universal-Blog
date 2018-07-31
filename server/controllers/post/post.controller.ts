@@ -11,14 +11,14 @@ import { MODEL_NAME_DEFINITIONS } from "@server/utils/constants/misc.constants";
 export class PostController {
 
     public static list = (req: Request, res: Response, next: NextFunction) => {
-        req.model(MODEL_NAME_DEFINITIONS.POST).$$read()(req, res, next);
-        // getDocsByQuery(Post, req, { }).then(docs => {
-        //     res.json(<IResourceListResponse>{ documents: docs });
-        // }, err => {
-        //     console.log(err);
-        //     // { message: ERROR_MESSAGES.ON_RESOURCE_QUERY }
-        //     return next(err);
-        // })
+        // req.model(MODEL_NAME_DEFINITIONS.POST).$$read()(req, res, next);
+        getDocsByQuery(Post, req, { }).then(docs => {
+            res.json(<IResourceListResponse>{ documents: docs });
+        }, err => {
+            console.log(err);
+            // { message: ERROR_MESSAGES.ON_RESOURCE_QUERY }
+            return next(err);
+        })
     }
 
     public static update = (req: Request, res: Response, next: NextFunction) => {
