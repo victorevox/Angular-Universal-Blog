@@ -1,6 +1,5 @@
 import { NgModule, Component, PLATFORM_ID, Inject } from '@angular/core'
 import { isPlatformBrowser, isPlatformServer } from "@angular/common";
-import { setInterval, setTimeout } from 'timers';
 // import { Util } from "@app/classes/util";
 import { Util } from "../../classes";
 import { GlobalsService } from "./../../services";
