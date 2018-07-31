@@ -16,8 +16,9 @@
     "start:server": "node dist/server",
     "build": "ng build",
     "build:app": "npm run build -- --prod --aot --output-hashing none",
-    "build:app-server": "node node_modules/.bin/webpack --config config/webpack/webpack.app.config.js --env.aot --env.server --progress --colors",
-    "build:server": "webpack --config config/webpack/webpack.server.config --progress"
+    "build:app-server": "ng run app:server",
+    "build:server": "webpack --config config/webpack/webpack.server.config --progress",
+    "build:app-server:deprecated": "node node_modules/.bin/webpack --config config/webpack/webpack.app.config.js --env.aot --env.server --progress --colors"
   },
   "private": true,
   "dependencies": {
