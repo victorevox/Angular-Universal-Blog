@@ -7,7 +7,11 @@ const nodeExternals = require('webpack-node-externals');
 const root = path.resolve(__dirname, "../../");
 
 module.exports = {
-  devtool: 'inline-source-map',
+  // devtool: 'inline-source-map',
+  // devtool: 'cheap-source-map',
+  mode: "development",
+  devtool: 'source-map',
+  // devtool: 'eval-source-map',
   entry: {
     // This is our Express server for Dynamic universal
     server: path.join(root, "server/server.ts"),
