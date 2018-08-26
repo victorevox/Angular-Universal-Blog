@@ -22,7 +22,7 @@ A minimal Angular starter for Universal JavaScript using TypeScript and Webpack
 * run `npm run init` this will run scripts located at (${workspace}/config/scripts) 
 
 ### Development (Client-side only rendering)
-* run `npm run start` which will start `ng serve`
+* run `npm run start` which will start `ng serve` or `npm run build:app`
 
 * run server
 * * `npm run build:app-server`
