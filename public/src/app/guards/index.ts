@@ -1,5 +1,5 @@
 import { UserAuthGuard } from "./user-auth.guard";
-import { AdminAuthGuard } from "./admin-auth.guard";
+import { AdminAuthGuard } from "@appsrc/app/modules/admin/guards/admin-auth.guard";
 
 export {
     UserAuthGuard,

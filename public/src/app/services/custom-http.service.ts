@@ -1,6 +1,6 @@
 import { Injectable, Injector } from '@angular/core';
 import { Http, ConnectionBackend, Headers, RequestOptions, Response, RequestOptionsArgs } from '@angular/http';
-import { AuthenticationService } from "./authentication.service";
+import { AuthenticationService } from "@appsrc/app/modules/_shared/services/authentication.service";
 
 @Injectable()
 export class CustomHttpService extends Http {

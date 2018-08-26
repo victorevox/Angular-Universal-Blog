@@ -1,1 +1,1 @@
-export { NavigableLink } from "./misc.interface";
+export * from "./navigation.interface";

@@ -10,8 +10,8 @@ export const ROUTES = [
     { path: 'authenticate', component: AuthComponent },
     // { path: 'api/authentication/facebook/callback', component: AuthComponent },
     { path: 'posts', component: PostListingComponent },
-    { path: 'lazy', loadChildren: './lazy_modules/lazy.module#LazyModule' },
-    { path: 'profile', canActivate: [UserAuthGuard], loadChildren: './lazy_modules/profile.module#ProfileModule' },
-    { path: 'admin', loadChildren: './lazy_modules/admin/admin.browser.module#AdminModule' },
+    { path: 'lazy', loadChildren: './modules/lazy/lazy.module#LazyModule' },
+    { path: 'profile', canActivate: [UserAuthGuard], loadChildren: './modules/profile/profile.module#ProfileModule' },
+    { path: 'admin', loadChildren: './modules/admin/admin.browser.module#AdminModule' },
     { path: '*', component: AuthComponent },
 ];  

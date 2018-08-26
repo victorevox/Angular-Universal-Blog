@@ -5,7 +5,7 @@ import { AlertsService } from '@app/services/alerts.service';
 import { AuthenticationService } from "@appsrc/app/modules/_shared/services";
 
 @Injectable()
-export class UserAuthGuard implements CanActivate {
+export class AdminAuthGuard implements CanActivate {
   constructor(private _authService: AuthenticationService, private _router: Router, private _alerts: AlertsService) {
     
   }
@@ -14,11 +14,11 @@ export class UserAuthGuard implements CanActivate {
     console.log("AlwaysAuthGuard");
     let user = this._authService.getUser();
     if(!user) {
-      this._alerts.create("error", "Log In first");
-      this._router.navigate(["authenticate"]);
+      this._alerts.create("error", "Not Authorized");
+      this._router.navigate(["/"]);
       return false;
     }
-    if(user.roles.indexOf(USER_ROLE.USER) !== -1) {
+    if(user.roles.indexOf(USER_ROLE.ADMIN) !== -1) {
       return true;
     }
   }

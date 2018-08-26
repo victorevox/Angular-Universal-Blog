@@ -26,8 +26,8 @@
       "@server/*": [
         "../../server/*"
       ],
-      "lazy_modules/*": [
-        "./app/lazy_modules/*"
+      "modules/*": [
+        "./app/modules/*"
       ]
     }
   },

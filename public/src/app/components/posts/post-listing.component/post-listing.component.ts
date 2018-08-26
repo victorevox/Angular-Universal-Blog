@@ -3,7 +3,7 @@ import { Router, NavigationEnd } from "@angular/router";
 import { HttpClient, HttpResponse } from "@angular/common/http";
 import { IPost, IResourceListResponse, IAuthenticationEvent } from "@shared/interfaces";
 import { NavigableLink } from "@app/interfaces";
-import { AuthenticationService } from '@app/services';
+import { AuthenticationService } from '@appsrc/app/modules/_shared/services';
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush,
