@@ -17,6 +17,10 @@ A minimal Angular starter for Universal JavaScript using TypeScript and Webpack
 ### Installation
 * `npm install` or `yarn`
 
+
+### First time cloning
+* run `npm run init` this will run scripts located at (${workspace}/config/scripts) 
+
 ### Development (Client-side only rendering)
 * run `npm run start` which will start `ng serve`
 
