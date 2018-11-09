@@ -1,134 +1,64 @@
 import { Request } from "express";
-import { Model, ModelPopulateOptions, Query } from "mongoose";
-import { merge, isEmpty, isObject, isString, isBoolean } from "lodash";
-import { ERROR_MESSAGES } from "@server/utils/constants/messages.constants";
+import { Model, DocumentQuery } from "mongoose";
+import { forOwn, isEmpty, isArray } from "lodash";
+import { MongooseQueryParser } from 'gb-mongoose-query-parser';
+import { IResourceListResponse } from "@shared/interfaces";
 
-function isValid(object) {
-    for (const optionKey in object) {
-        let option = object[optionKey];
-        switch (optionKey) {
-            case "select":
-                if (!isString(option)) return false;
-                break;
-            case "options":
-                if (!isObject(option)) return false;
-                break;
-            case "match":
-                if (!isObject(option)) return false;
-                break;
-        }
-        return true;
-    }
-}
-
-export const getDocsByQuery = (model: Model<any>, req: Request, options) => {
+export const getDocsByQuery = (model: Model<any>, req: Request, options?: object) => {
     return new Promise((resolve, reject) => {
         let defaultOptions = {
             ignoreCompanyRelation: false
         }
-        // set options
-        options = merge(defaultOptions, options);
-        let query = null;
-        let response;
-        let queryParams: IQueryParams = {};
-        let id = req.params.id || req.query._id;
-        if (id) {
-            query = model.findById(id);
+
+        // Query variables
+        let query: DocumentQuery<any, any>;
+        let countQueryDocuments: DocumentQuery<any, any>;
+
+        // Array of queries' promises
+        let queryPromises = [];
+        let _id = req.params._id || req.query._id;
+        if (_id) {
+            query = model.findById(_id).lean();
+            countQueryDocuments = model.countDocuments({ _id });
         } else {
-            query = model.find({});
+            query = model.find({}).lean();
+            countQueryDocuments = model.countDocuments();
         }
+
         if (!isEmpty(req.query)) {
-            response = {
-                documents: []
-            };
-            queryParams = req.query;
-            if (!queryParams.es) {
-                if (queryParams.filter) {
-                    let filter = typeof queryParams.filter === "string" && JSON.parse(queryParams.filter) || req.query.filter;
-                    if (filter.where) {
-                        let where = filter.where;
-                        for (const key in where) {
-                            query = query.where(key, where[key]);
-                        }
-                    }
-                    if (filter.sort) {
-                        query = query.sort(filter.sort);
-                    }
-                    if (filter.limit) {
-                        query = query.limit(filter.limit);
-                    }
-                }
-                if (queryParams.populate) {
-                    let populate = typeof queryParams.populate === "string" && JSON.parse(queryParams.populate) || req.query.populate;
-                    if (isObject(populate)) {
-                        for (const fieldKey in populate) {
-                            let field = populate[fieldKey]
-                            if (isString(field) || isBoolean(field)) {
-                                query.populate(fieldKey);
-                            } else if (isObject(field) && isValid(field)) {
-                                field.path = fieldKey;
-                                query.populate(field)
-                            }
-                        }
-                    } else {
-                        throw new Error(ERROR_MESSAGES.BAD_REQUEST);
-                    }
-                }
-            } else if (queryParams.es_query) {
-                //do elastic search 
-                let es_query = queryParams.es_query && JSON.parse(queryParams.es_query) || queryParams.es_query;
-                let modelnoerrors = model = model as any;
-                if (modelnoerrors.esSearch) {
-                    query = <Query<any>>modelnoerrors.esSearch(es_query);
-                } else {
-                    throw new Error(ERROR_MESSAGES.BAD_REQUEST)
-                }
-
-            } else {
-                if (!queryParams.es_query) throw new Error(ERROR_MESSAGES.NO_QUERY);
+            const parser = new MongooseQueryParser();
+            let queryParams = parser.parse(req.query);
+            if (queryParams.filter) {
+                forOwn(queryParams.filter, (value, key) => {
+                    query = query.where(key, value);
+                    countQueryDocuments = countQueryDocuments.where(key, value);
+                });
             }
-            // return res.status(200).json( { message: queryParams } )
+            if (queryParams.populate) query = query.populate(queryParams.populate)
+            if (queryParams.deepPopulate) query = query.populate(queryParams.deepPopulate)
+            if (queryParams.sort) query = query.sort(queryParams.sort);
+            if (queryParams.limit) query = query.limit(queryParams.limit);
+            if (queryParams.select) query = query.select(queryParams.select);
+            if (queryParams.skip) query = query.skip(queryParams.skip);
+
         }
 
-        query.then(docs => {
-            docs = queryParams.es_query && queryParams.es_raw && docs || queryParams.es_query && docs.hits && docs.hits.hits || docs;
-            if (queryParams.es_query && !queryParams.es_raw && !queryParams.es_nested_source) {
-                docs = docs.map(doc => {
-                    let newDoc = doc._source || {};
-                    newDoc._id = doc._id;
-                    newDoc._score = doc._score;
-                    return newDoc;
-                })
-            }
-            resolve(docs);
-        }).catch(err => {
-            reject(err);
-        })
-    })
-}
+        //Attaching queries to the promise array.
+        queryPromises.push(countQueryDocuments);
+        queryPromises.push(query);
+        Promise.all(queryPromises)
+            .then(response => {
+                let totalDocuments = response[0];
 
-
-interface IQueryParams {
-    es?: boolean,
-    es_query?: any,
-    es_raw?: any,
-    es_nested_source?: boolean,
-    filter?: {
-        where?: {
-            [field: string]: any
-        },
-        sort?: {
-            [field: string]: [1, 2]
-        },
-        limit?: number
-    },
-    populate?: string | {
-        [field: string]: boolean | {
-            match?: any,
-            options?: any,
-            populate?: ModelPopulateOptions,
-            model?: any,
-            select?: any
-        }
-    },
+                /* Check documents  */
+                /** 
+                 * if Array ==> return as is ([doc1, doc2, doc3, ...])
+                 * if single document ==> return array with that document ([singleDoc])
+                 * if null ==>  return null
+                 */
+                let documents = isArray(response[1]) ? response[1] : response[1] ? [response[1]] : response[1];
+                return resolve(<IResourceListResponse>{ totalDocuments, documents });
+            })
+            .catch(err => reject(err));
+    });
 }

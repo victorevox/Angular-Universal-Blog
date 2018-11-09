@@ -6,6 +6,7 @@ import { Model } from "mongoose";
 declare module "express" {
     interface Request { 
         user: IUserModel;
+        isAdmin: boolean
         model(something, options?): Model<any>;
      }
 }

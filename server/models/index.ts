@@ -1,3 +1,4 @@
-export { User, IUserModel, UserSchema } from "./User";
-export { Post, IPostModel, PostSchema } from "./Post";
-export { Page, IPageModel, PageSchema } from "./Page";
+export * from "./user/User";
+export * from "./post/Post";
+export * from "./page/Page";
+export * from "./file/File";

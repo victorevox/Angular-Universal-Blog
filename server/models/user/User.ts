@@ -2,9 +2,12 @@
 import { Document, Schema, Model, model, Types } from "mongoose";
 import { randomBytes, pbkdf2Sync } from "crypto";
 import * as jwt from "jsonwebtoken";
-// import { IUser } from "./../../src/app/interfaces";
 import { IUser } from "@shared/interfaces/user.interface";
-import { MODEL_NAME_DEFINITIONS } from "@server/utils/constants/misc.constants";
+import { MODEL_NAME_DEFINITIONS } from "@server/utils/constants";
+import { hashSync, compareSync } from "bcrypt"
+import * as moment from 'moment';
+
+const HASH_COST = 10;
 
 export var UserSchema: Schema = new Schema({
     email: {
@@ -59,18 +62,22 @@ UserSchema.pre("save", function (next) {
     next();
 });
 
-UserSchema.methods.savePassword = function (password)  {
-    if (password) {
-        this.salt = randomBytes(16).toString('hex');
-        this.hash = pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex');
-    } else {
-        throw new Error("User must contain a password");
-    }
+UserSchema.methods.setConfirmAccountToken = function () {
+    this.confirmAccountToken = randomBytes(3).toString('hex');
+};
+
+UserSchema.methods.setForgotPasswordToken = function () {
+    this.forgotPasswordToken = randomBytes(16).toString('hex');
+    this.forgotPasswordTokenExpires = moment().add(1, 'hour');
+};
+
+UserSchema.methods.savePassword = function (password) {
+    if (!password) throw new Error("User must contain a password");
+    this.hash = hashSync(password, HASH_COST);
 };
 
 UserSchema.methods.validPassword = function (password) {
-    var hash = pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex');
-    return this.hash === hash;
+    return compareSync(password, this.hash);
 };
 
 UserSchema.statics.validateToken = function (token) {

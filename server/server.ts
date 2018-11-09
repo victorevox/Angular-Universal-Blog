@@ -5,6 +5,9 @@ import { join, resolve } from 'path';
 import { readFileSync, existsSync } from 'fs';
 import { json, urlencoded } from "body-parser";
 import { config as dotEnvConfig } from "dotenv";
+import chalk from 'chalk';
+import * as prettyError from 'pretty-error'
+prettyError.start();
 
 //All serverside Related stuff
 import 'zone.js/dist/zone-node';
@@ -21,12 +24,18 @@ enableProdMode();
 
 import { api_routes } from "@server/routes/api.routes";
 import { ErrorMiddleware } from "@server/middlewares/express/error.middleware";
-import { connectDb } from '@server/config/db';
-import { PassportConfig } from "@server/config/passport";
+import { 
+  connectDb ,
+  PassportConfig,
+  HelmetConfig,
+  RateLimitAPIConfig,
+  CorsConfig,
+  MorganConfig
+} from '@server/config';
 
-const DIST_FOLDER = join(process.cwd(), 'dist');
 
-import { createWindow, createDOMImplementation } from "domino";
+import { createWindow } from "domino";
+import { DIST_FOLDER, STORAGE_FOLDER } from './utils/constants';
 
 let window = createWindow();
 global["window"] = window;
@@ -61,7 +70,7 @@ const PORT = process.env.PORT || 4000;
 
 // Our index.html we'll use as our template
 if (existsSync(resolve(DIST_FOLDER, 'browser/index.html'))) {
-  console.log("Index found");
+  console.log(chalk.bold.whiteBright("Index found"));
   const template = readFileSync(join(DIST_FOLDER, 'browser', 'index.html')).toString();
 }
 
@@ -84,6 +93,11 @@ connectDb();
 
 //Config Passport
 PassportConfig.config(app);
+MorganConfig.config(app);
+RateLimitAPIConfig.config(app);
+HelmetConfig.config(app);
+CorsConfig.config(app);
+
 
 // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
 app.engine('html', ngExpressEngine({
@@ -105,8 +119,8 @@ app.set('views', 'src');
 app.get('*.*', express.static(join(DIST_FOLDER, 'browser'), {
   maxAge: '1y'
 }));
-// Server static files from /../statics
-app.get('*.*', express.static(join(DIST_FOLDER, '/../statics'), {
+// Server static files from /../storage
+app.get('*.*', express.static(STORAGE_FOLDER, {
   maxAge: '1y'
 }));
 

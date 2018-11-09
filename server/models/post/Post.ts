@@ -3,7 +3,7 @@ import { Document, Schema, Model, model, Types } from "mongoose";
 import { randomBytes, pbkdf2Sync } from "crypto";
 import * as jwt from "jsonwebtoken";
 import { IPost } from "@shared/interfaces";
-import { MODEL_NAME_DEFINITIONS } from "@server/utils/constants/misc.constants";
+import { MODEL_NAME_DEFINITIONS } from "@server/utils/constants";
 
 export var PostSchema: Schema = new Schema({
     title: {

@@ -1,6 +1,7 @@
 export interface IUser {
-    email?: string,
-    username?: string,
+    _id: string | any
+    email: string,
+    username: string,
     banned?: boolean,
     createdAt?: Date,
     profileImg?: string,

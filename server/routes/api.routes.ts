@@ -7,7 +7,7 @@ import { AuthMiddleware, MongooseCustomMiddleware } from "./../middlewares/expre
 
 export const api_routes = (app: Application) => {
     //Add auth and mongoose model compiler midlewares
-    app.use('/api', AuthMiddleware.init, MongooseCustomMiddleware.init)
+    app.use('/api', AuthMiddleware.init([]), MongooseCustomMiddleware.init)
     app.use('/api', auth_router);
     app.use('/api', user_router);
     app.use('/api', post_router);

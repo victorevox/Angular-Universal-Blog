@@ -38,8 +38,8 @@ export const compileModelsForConnection = function (connection: Connection, opti
     }
 
     function addPlugins(schema: Schema) {
-        schema.plugin(CrudMiddleware.init);
-        schema.plugin(TenantPopulationMiddleware.init);
-        schema.plugin(SecurityMiddleware.init);
+        schema.plugin(CrudMiddleware.init, {});
+        schema.plugin(TenantPopulationMiddleware.init, {});
+        schema.plugin(SecurityMiddleware.init, {});
     }
 }

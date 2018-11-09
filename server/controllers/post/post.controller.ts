@@ -6,7 +6,7 @@ import * as path from "path";
 import { IResourceListResponse, USER_ROLE, IPost } from "@shared/interfaces";
 import { getDocsByQuery } from "@server/utils/helpers/query.helper";
 import { IResourceUpdateResponse, IResourceCreateResponse } from "@shared/interfaces/misc.interface";
-import { MODEL_NAME_DEFINITIONS } from "@server/utils/constants/misc.constants";
+import { MODEL_NAME_DEFINITIONS } from "@server/utils/constants";
 
 export class PostController {
 

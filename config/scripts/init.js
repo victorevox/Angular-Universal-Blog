@@ -19,11 +19,8 @@ let envExample = dotenv.parse(fileContents);
 
 if(!envExample.JWT_SECRET) {
     console.log("Genereting JWT_SECRET");
-    crypto.randomBytes(48, function (err, buff) {
-        secret = buff.toString('hex');
-        fs.appendFileSync(envPath, ` \n#Auto generated JWT_SECRET \nJWT_SECRET = '${secret}'`);
-    })
-    
+    let secret = bcrypt.genSaltSync(10);
+    fs.appendFileSync(envPath, ` \n#Auto generated JWT_SECRET \nJWT_SECRET = '${secret}'`);    
 }
 
 
