@@ -41,6 +41,7 @@
     "bcrypt": "^3.0.1",
     "body-parser": "^1.18.3",
     "bootstrap": "^4.1.3",
+    "chalk": "^2.4.1",
     "color-convert": "^1.9.3",
     "cors": "^2.8.4",
     "cron": "^1.4.1",

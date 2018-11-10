@@ -4,6 +4,7 @@ import { NgForm } from "@angular/forms";
 import { AlertsService } from '@app/services/alerts.service';
 import { NotificationsService } from 'angular2-notifications';
 import { AuthenticationService } from '@appsrc/app/modules/_shared/services';
+import { Observable } from 'rxjs';
 
 enum AUTH_TYPES {
   SIGNUP = "signup",
@@ -25,7 +26,15 @@ export class AuthenticationComponent implements OnInit {
   public auth_type = AUTH_TYPES.LOGIN;
   public title: string = "";
 
-  constructor(private _router: Router, private _notifications: NotificationsService, private route: ActivatedRoute, private _authService: AuthenticationService, private _alerts: AlertsService, private _cDr: ChangeDetectorRef) {
+  constructor(
+    private _router: Router,
+    private _notifications: NotificationsService,
+    private route: ActivatedRoute,
+    private _authService: AuthenticationService,
+    private _alerts: AlertsService,
+    private _cDr: ChangeDetectorRef,
+    private _alertService: AlertsService
+  ) {
     this._router.routerState.root.queryParams.subscribe((params) => {
       let type = params["auth_type"];
       this.route;
@@ -40,12 +49,12 @@ export class AuthenticationComponent implements OnInit {
             this.setupSignup();
             break;
           case AUTH_TYPES.FACEBOOK:
-            if(!params) {
+            if (!params) {
               this._alerts.create("error", "Error");
               return this.goLogin();
-            } 
+            }
             let token = params["token"];
-            if(token) {
+            if (token) {
               this._authService.saveToken(token);
               this._notifications.success("Logged In");
               this._router.navigate(['profile']);
@@ -72,32 +81,36 @@ export class AuthenticationComponent implements OnInit {
     event.preventDefault();
     console.log(this.form);
     if (this.form.valid) {
-      let promise: Promise<void>;
+      let observable: Observable<any>;
 
       switch (this.auth_type) {
         case AUTH_TYPES.LOGIN:
-          promise = this._authService.loginByCredentials(this.form.value);
+          observable = this._authService.loginByCredentials(this.form.value);
           break;
         case AUTH_TYPES.SIGNUP:
-          promise = this._authService.signupByCredentials(this.form.value);
+          observable = this._authService.signupByCredentials(this.form.value);
           break;
 
         default:
           break;
       }
-      if (promise && promise.then) {
-        promise.then(() => {
+      if (observable) {
+        observable.subscribe(() => {
           switch (this.auth_type) {
             case AUTH_TYPES.LOGIN:
               this._router.navigate(["profile"])
               break;
             case AUTH_TYPES.SIGNUP:
+              this._notifications.success("Great!", "You've been registered successfuly")
               break;
 
             default:
               break;
           }
           this._cDr.markForCheck();
+        }, error => {
+          const message = (error.error && error.error.message || error.error) || error && error.message || error
+          this._notifications.error("Error", message);
         })
       }
     } else {

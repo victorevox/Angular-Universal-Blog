@@ -46,8 +46,6 @@ global["DOMTokenList"] = class DOMTokenList{
 global["Node"] = class Node {};
 global["navigator"] = window.navigator;
 
-console.log(join(__dirname, '/../../.env'));
-
 //Read env variables
 if (existsSync(join(__dirname, '/../../.env'))) {
   let envPath = join(__dirname, '/../../.env');

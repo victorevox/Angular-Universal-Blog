@@ -42,7 +42,7 @@ export class AuthenticationController {
                 return res.status(500).json(err);
             }
             if (!user) {
-                return res.status(401).json({ message: "Wrong credentials" });
+                return res.status(401).json({ message: info && info.message || "Wrong credentials" });
             }
             // req.logIn
             let token = user.generateJwt();

@@ -5,6 +5,8 @@ import { StorageService } from '@appsrc/app/services/storage.service';
 import { IUser, USER_ROLE, IAuthenticationEvent, ISignupCredentials, AUTH_EVENT_TYPES, ILoginCredentials, ILoginResponse } from "@shared/interfaces";
 import { NotificationsService } from 'angular2-notifications';
 import { Location } from "@angular/common";
+import { Observable } from 'rxjs';
+import { tap, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: "root"
@@ -18,44 +20,45 @@ export class AuthenticationService {
 
   }
 
-  signupByCredentials(credentials: ISignupCredentials): Promise<void> {
-    return new Promise((resolve, reject) => {
-      this.http.post("/api/authentication/register", credentials).subscribe((response: HttpResponse<any>) => {
+  signupByCredentials(credentials: ISignupCredentials): Observable<HttpResponse<any>> {
+    return this.http.post("/api/authentication/register", credentials).pipe(
+      tap((response: HttpResponse<any>) => {
         console.log(response);
         this.emit(AUTH_EVENT_TYPES.SIGNUP)
-        this._notifications.success("Great!", "You've been registered successfuly")
-        resolve();
-      }, err => {
-        reject();
+      }),
+      catchError(err => {
         this.handleError(err);
+        throw err
       })
-    })
+    )
+    // return new Promise((resolve, reject) => {
+    // })
   }
 
-  loginByCredentials(credentials: ILoginCredentials): Promise<void> {
-    return new Promise((resolve, reject) => {
-      console.log("Login by credentials");
-      this.http.post("/api/authentication/login", credentials).subscribe((response: ILoginResponse) => {
+  loginByCredentials(credentials: ILoginCredentials): Observable<ILoginResponse> {
+    return this.http.post("/api/authentication/login", credentials).pipe(
+      tap((response: ILoginResponse) => {
         try {
           let token = response.token;
           this.saveToken(token);
           console.log(token)
           this.emit(AUTH_EVENT_TYPES.LOGIN);
-          resolve();
         } catch (error) {
-          reject();
-          this._alert.create("error", "Something went wrong", "Error");
           console.log(response);
         }
-      }, err => {
-        reject()
+      }),
+      catchError(err => {
         this.handleError(err);
+        throw err;
       })
-    })
+    )
+    // return new Promise((resolve, reject) => {
+    //   console.log("Login by credentials");
+    // })
   }
 
   loginFacebook() {
-    this._location.go( "/api/authentication/facebook");
+    this._location.go("/api/authentication/facebook");
     window && window.location.reload();
     // this._location.replaceState("/api/authentication/facebook");
   }

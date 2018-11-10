@@ -30,9 +30,11 @@ export class AuthMiddleware {
                     User.findById(userDecoded._id)
                         .then((user) => {
                             if (!user) return AuthMiddleware.decline(new Error('Unable to find user for authentication.'), req, res);
-                            let rolesIntersection = intersection(user.roles, requiredRoles);
-                            if (!rolesIntersection.length) return AuthMiddleware.decline(new Error('You do no have enough privileges to perfom this action.'), req, res);
-                            if (rolesIntersection.indexOf(USER_ROLES.ADMIN) !== -1) req.isAdmin = true;
+                            if(requiredRoles.length > 0) {
+                                let rolesIntersection = intersection(user.roles, requiredRoles);
+                                if (!rolesIntersection.length) return AuthMiddleware.decline(new Error('You do no have enough privileges to perfom this action.'), req, res);
+                            }
+                            if (user.roles.indexOf(USER_ROLES.ADMIN) !== -1) req.isAdmin = true;
                             // if (!req.isAdmin && req.params._id !== user._id.toString() && req.method === "PUT") return AuthMiddleware.decline(new Error('You are not authorized to update this resource.'), req, res);
                             req.user = user;
                             next();
